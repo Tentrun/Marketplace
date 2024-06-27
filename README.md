@@ -20,6 +20,12 @@ nvm install 20.15.0
 ```
 npm i
 ```
+
+Развертка БД в докере через CMD
+
+```
+docker run --name marketplace -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=Qwerty123@! -e POSTGRES_HOST_AUTH_METHOD=trust -v pg_data:/var/lib/postgresql/data -d postgres
+```
     
 ## Tech Stack
 
@@ -37,3 +43,5 @@ npm i
 [NVM под винду](https://github.com/coreybutler/nvm-windows/releases/download/1.1.12/nvm-setup.exe)
 
 [Дока TaigaUI](https://taiga-ui.dev/getting-started)
+
+[Docker Desktop](https://www.docker.com/products/docker-desktop)
