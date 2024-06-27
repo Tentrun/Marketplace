@@ -1,3 +1,6 @@
+import { NgDompurifySanitizer } from "@tinkoff/ng-dompurify";
+import { TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER } from "@taiga-ui/core";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -26,9 +29,13 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-    ])
-  ],
-  providers: [],
+    ]),
+      BrowserAnimationsModule,
+      TuiRootModule,
+      TuiDialogModule,
+      TuiAlertModule
+],
+  providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
