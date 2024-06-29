@@ -1,0 +1,33 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Marketplace.BaseLibrary";
+
+package logger;
+
+// The greeting service definition.
+service LoggerGrpcService {
+  // Sends a greeting
+  rpc CreateLog (LogRequest) returns (LogReply);
+}
+
+// The request message containing the user's name.
+message LogRequest {
+  LogType logType = 1;
+  google.protobuf.Timestamp logDate = 2;
+  string logClassInitializer = 3;
+  string logCallingMethod = 4;
+  string logJsonValue = 5;
+}
+
+// The response message containing the greetings.
+message LogReply {
+  bool writeLogResult = 1;
+}
+
+enum LogType{
+  Information = 0;
+  Warning = 1;
+  Error = 2;
+  Debug = 3;
+}
