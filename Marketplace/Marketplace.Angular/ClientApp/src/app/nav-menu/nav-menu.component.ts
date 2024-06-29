@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, Inject} from '@angular/core';
+import {TuiAlertService} from "@taiga-ui/core";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-nav-menu',
@@ -7,6 +9,20 @@ import { Component } from '@angular/core';
 })
 export class NavMenuComponent {
   isExpanded = false;
+
+  activeItemIndex = 0;
+
+  constructor(
+    @Inject(TuiAlertService)
+    private readonly alerts: TuiAlertService, private readonly router: Router
+  ) {
+
+  }
+
+  onClick(item: string): void {
+    this.router.navigate([`${item}`]).then(r => console.log("s"))
+    this.alerts.open(item).subscribe();
+  }
 
   collapse() {
     this.isExpanded = false;

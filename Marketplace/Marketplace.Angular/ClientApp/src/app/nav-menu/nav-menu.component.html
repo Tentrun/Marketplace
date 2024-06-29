@@ -2,8 +2,15 @@
   <nav
     class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
   >
+    <!-- Текст с логотипом компании -->
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">Marketplace.Angular</a>
+      <div class="navbar-brand" style="display: inline-flex; align-items: center; ">
+        <img style="cursor:pointer;" ngSrc="assets/icons/main-logo.png" alt="Логотип" height="50" width="50" [routerLink]="['/']">
+        <a style="margin-left: 1vh" class="navbar-brand" [routerLink]="['/']">Marketplace</a>
+      </div>
+
+      <!-- Мобильный гамбургер меню -->
+      <!-- TODO: сделать мобильную верстку, сейчас выходит за рамки -->
       <button
         class="navbar-toggler"
         type="button"
@@ -15,29 +22,70 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
+
+      <!-- Кнопки перехода nav bar'a -->
       <div
         class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
         [ngClass]="{ show: isExpanded }"
       >
-        <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
+        <tui-tabs
+          class="justify-content-between align-items-center"
+          [(activeItemIndex)]="activeItemIndex">
+          <button
+            tuiTab
+            (click)="onClick('Каталог товаров')"
           >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
-            >
-          </li>
-        </ul>
+            <tui-svg
+              src="tuiIconLayers"
+              class="tui-space_right-1"
+            ></tui-svg>
+            Каталог товаров
+          </button>
+          <button
+            tuiTab
+            (click)="onClick('Заказы')"
+          >
+            <tui-svg
+              src="tuiIconBox"
+              class="tui-space_right-1"
+            ></tui-svg>
+            Заказы
+          </button>
+
+          <button
+            tuiTab
+            (click)="onClick('Избранное')"
+          >
+            <tui-svg
+              src="tuiIconHeart"
+              class="tui-space_right-1"
+            ></tui-svg>
+            Избранное
+          </button>
+
+          <button
+            tuiTab
+            (click)="onClick('Корзина')"
+          >
+            <tui-svg
+              src="tuiIconShoppingBag"
+              class="tui-space_right-1"
+            ></tui-svg>
+            Корзина
+          </button>
+
+          <button
+            style="border-left: 1px solid lightgray;"
+            tuiTab
+            (click)="onClick('Личный кабинет')"
+          >
+            <tui-svg
+              src="tuiIconUser"
+              class="tui-space_right-1 tui-space_left-2"
+            ></tui-svg>
+            Личный кабинет
+          </button>
+        </tui-tabs>
       </div>
     </div>
   </nav>
