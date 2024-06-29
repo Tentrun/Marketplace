@@ -3,6 +3,7 @@ using Google.Protobuf.WellKnownTypes;
 using Grpc.Net.Client;
 using Marketplace.BaseLibrary.Entity.Logger;
 using Marketplace.BaseLibrary.Enum;
+using Marketplace.BaseLibrary.Exception.Logger;
 using Marketplace.BaseLibrary.Logger.Extension;
 
 namespace Marketplace.BaseLibrary.Logger;
@@ -76,15 +77,22 @@ public static class Logger
     /// </summary>
     private static async Task<bool> ExecuteCreateLogOperation(Log log)
     {
-        LogReply? reply = await LoggerExtension.LoggerClient().CreateLogAsync(new LogRequest
+        try
         {
-            LogType = (LogType)log.LogType,
-            LogDate = log.Time.ToTimestamp(),
-            LogClassInitializer = log.CallingClass,
-            LogCallingMethod = log.CallingMethod,
-            LogJsonValue = log.LogValue
-        });
+            LogReply? reply = await LoggerExtension.LoggerClient().CreateLogAsync(new LogRequest
+            {
+                LogType = (LogType)log.LogType,
+                LogDate = log.Time.ToTimestamp(),
+                LogClassInitializer = log.CallingClass,
+                LogCallingMethod = log.CallingMethod,
+                LogJsonValue = log.LogValue
+            });
 
-        return reply != null && reply.WriteLogResult;
+            return reply.WriteLogResult;
+        }
+        catch (System.Exception e)
+        {
+            throw new LoggerUnavailableException(e.ToString());
+        }
     }
 }
