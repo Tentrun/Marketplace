@@ -1,12 +1,9 @@
 using Marketplace.BaseLibrary.Entity.Logger;
+using Marketplace.BaseLibrary.Interfaces.Base.Repository;
 
 namespace Marketplace.LoggerService.Data.Repository.Interface;
 
-public interface ILogRepository
+public interface ILogRepository : IBaseRepository<Log>
 {
-    /// <summary>
-    /// Функция записи лога
-    /// </summary>
-    /// <exception cref="NullReferenceException">В скопе нету контекста БД</exception>
-    public Task<bool> WriteLog(Log log);
+    
 }

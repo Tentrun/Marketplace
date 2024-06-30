@@ -21,7 +21,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet(Name = "Test")]
     public async Task<IActionResult> TestLog()
     {
-        //BaseLibrary.Logger.Logger.Log();
+        BaseLibrary.Utils.Logger.Logger.LogDebug(new Exception("Exception"));
         return Ok("ok");
     }
 }

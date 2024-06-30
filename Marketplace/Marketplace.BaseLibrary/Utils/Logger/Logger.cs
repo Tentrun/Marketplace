@@ -1,12 +1,11 @@
 using System.Runtime.CompilerServices;
 using Google.Protobuf.WellKnownTypes;
-using Grpc.Net.Client;
 using Marketplace.BaseLibrary.Entity.Logger;
 using Marketplace.BaseLibrary.Enum;
 using Marketplace.BaseLibrary.Exception.Logger;
-using Marketplace.BaseLibrary.Logger.Extension;
+using Marketplace.BaseLibrary.Utils.Logger.Extension;
 
-namespace Marketplace.BaseLibrary.Logger;
+namespace Marketplace.BaseLibrary.Utils.Logger;
 
 /// <summary>
 /// Универсальный класс для записи логов в базу данных

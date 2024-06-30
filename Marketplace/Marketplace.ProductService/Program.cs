@@ -1,9 +1,9 @@
 using Marketplace.BaseLibrary.Utils;
 using Marketplace.BaseLibrary.Utils.UnitOfWork.DI;
-using Marketplace.LoggerService.Data;
-using Marketplace.LoggerService.Data.Repository.Implementation;
-using Marketplace.LoggerService.Data.Repository.Interface;
-using Marketplace.LoggerService.Services;
+using Marketplace.ProductService.Data;
+using Marketplace.ProductService.Data.Repository.Implementation;
+using Marketplace.ProductService.Data.Repository.Interface;
+using Marketplace.ProductService.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,11 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddGrpc();
 builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 {
-    opt.UseNpgsql(builder.Configuration.GetConnectionString("LoggerPsSql"));
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("ProductsPsSql"));
 });
-builder.Services.AddScoped<ILogRepository, LogRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddUnitOfWork<ApplicationDbContext>();
-
 
 var app = builder.Build();
 
@@ -24,7 +23,7 @@ var app = builder.Build();
 app.Services.ApplyMigrations<ApplicationDbContext>();
 
 // Configure the HTTP request pipeline.
-app.MapGrpcService<LoggerService>();
+app.MapGrpcService<GreeterService>();
 app.MapGet("/",
     () =>
         "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");

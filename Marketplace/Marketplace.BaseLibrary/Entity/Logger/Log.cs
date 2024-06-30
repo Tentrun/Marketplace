@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Marketplace.BaseLibrary.Enum;
-using Marketplace.BaseLibrary.Logger.Extension;
+using Marketplace.BaseLibrary.Utils.Logger.Extension;
 
 namespace Marketplace.BaseLibrary.Entity.Logger;
 
@@ -12,7 +12,7 @@ public class Log
 {
     public Log(LogTypeEnum logType, string callingClass, string callingMethod, string logValue)
     {
-        CallingClass = callingClass;
+        CallingClass = callingClass.FormatCallingMethod();
         CallingMethod = callingMethod.FormatCallingMethod();
         LogValue = logValue;
         LogType = logType;
@@ -21,8 +21,8 @@ public class Log
     
     public Log(LogTypeEnum logType, string callingClass, string callingMethod, object logValue)
     {
-        CallingClass = callingClass;
-        CallingMethod = callingMethod.FormatCallingMethod();
+        CallingClass = callingClass.FormatCallingMethod();
+        CallingMethod = callingMethod;
         LogValue = System.Text.Json.JsonSerializer.Serialize(logValue);
         LogType = logType;
         Time = DateTime.UtcNow;

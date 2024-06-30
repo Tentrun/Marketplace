@@ -1,7 +1,7 @@
 using Grpc.Net.Client;
 using static System.String;
 
-namespace Marketplace.BaseLibrary.Logger.Extension;
+namespace Marketplace.BaseLibrary.Utils.Logger.Extension;
 
 internal static class LoggerExtension
 {
