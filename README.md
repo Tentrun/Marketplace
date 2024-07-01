@@ -26,7 +26,12 @@ npm i
 ```
 docker run --name marketplace -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=Qwerty123@! -e POSTGRES_HOST_AUTH_METHOD=trust -v pg_data:/var/lib/postgresql/data -d postgres
 ```
-    
+
+Через pgAdmin подключаемся к БД на localhost:5432
+
+Там создаем базы данных **LoggerDb  ProductsDb SettingsDb**
+
+**Миграции применятся автоматически**    
 ## Tech Stack
 
 **Client:** Angular 18.0.5, .Net 8.0,
@@ -45,3 +50,36 @@ docker run --name marketplace -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES
 [Дока TaigaUI](https://taiga-ui.dev/getting-started)
 
 [Docker Desktop](https://www.docker.com/products/docker-desktop)
+
+
+## Подключение различных сервисов
+Подключение DbContext'a
+```
+builder.Services.AddDbContext<ApplicationDbContext>(opt =>
+{
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("название бд из appsettings"));
+});
+```
+
+Подключение UnitOfWork для работы с репозиториями
+``` 
+builder.Services.AddUnitOfWork<ApplicationDbContext>();
+```
+
+Подключение HealthChecker'a
+``` 
+builder.Services.AddDatabaseHealthReporter(ServicesConst.НазваниеСервиса, "Описание сервиса");
+```
+
+``` 
+app.Lifetime.ApplicationStarted.Register(() =>
+{
+    var server = app.Services.GetRequiredService<IServer>();
+    var serverAddressesFeature = server.Features.Get<IServerAddressesFeature>();
+
+    if (serverAddressesFeature == null) return;
+
+    HealthCheckService.ApplicationAddress =
+        serverAddressesFeature.Addresses.FirstOrDefault(x => x.Contains("http"));
+});
+```
