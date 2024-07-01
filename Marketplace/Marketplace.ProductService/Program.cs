@@ -3,7 +3,6 @@ using Marketplace.BaseLibrary.Utils.UnitOfWork.DI;
 using Marketplace.ProductService.Data;
 using Marketplace.ProductService.Data.Repository.Implementation;
 using Marketplace.ProductService.Data.Repository.Interface;
-using Marketplace.ProductService.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,7 +22,7 @@ var app = builder.Build();
 app.Services.ApplyMigrations<ApplicationDbContext>();
 
 // Configure the HTTP request pipeline.
-app.MapGrpcService<GreeterService>();
+//app.MapGrpcService<GreeterService>();
 app.MapGet("/",
     () =>
         "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");

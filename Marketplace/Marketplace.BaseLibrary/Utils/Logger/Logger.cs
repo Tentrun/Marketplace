@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using Google.Protobuf.WellKnownTypes;
-using Marketplace.BaseLibrary.Entity.Logger;
-using Marketplace.BaseLibrary.Enum;
+using Marketplace.BaseLibrary.Entity.Base.Logger;
+using Marketplace.BaseLibrary.Enum.Base;
 using Marketplace.BaseLibrary.Exception.Logger;
 using Marketplace.BaseLibrary.Utils.Logger.Extension;
 
@@ -78,7 +78,7 @@ public static class Logger
     {
         try
         {
-            LogReply? reply = await LoggerExtension.LoggerClient().CreateLogAsync(new LogRequest
+            LogReply? reply = await LoggerExtension.GetLoggerClient().CreateLogAsync(new LogRequest
             {
                 LogType = (LogType)log.LogType,
                 LogDate = log.Time.ToTimestamp(),

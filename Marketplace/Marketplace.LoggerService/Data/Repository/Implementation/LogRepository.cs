@@ -1,4 +1,4 @@
-using Marketplace.BaseLibrary.Entity.Logger;
+using Marketplace.BaseLibrary.Entity.Base.Logger;
 using Marketplace.BaseLibrary.Interfaces.Base;
 using Marketplace.LoggerService.Data.Repository.Interface;
 

@@ -1,9 +1,9 @@
-using Grpc.Core;
+/*using Grpc.Core;
 using Marketplace.ProductService;
 
 namespace Marketplace.ProductService.Services;
 
-public class GreeterService : Greeter.GreeterBase
+public class GreeterService : gree.GreeterBase
 {
     private readonly ILogger<GreeterService> _logger;
 
@@ -19,4 +19,4 @@ public class GreeterService : Greeter.GreeterBase
             Message = "Hello " + request.Name
         });
     }
-}
+}*/

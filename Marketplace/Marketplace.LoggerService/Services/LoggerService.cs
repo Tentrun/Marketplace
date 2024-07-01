@@ -1,6 +1,6 @@
 using Grpc.Core;
 using Marketplace.BaseLibrary;
-using Marketplace.BaseLibrary.Entity.Logger;
+using Marketplace.BaseLibrary.Entity.Base.Logger;
 using Marketplace.BaseLibrary.Interfaces.Base.Repository;
 using Marketplace.LoggerService.Data.Repository.Interface;
 

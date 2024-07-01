@@ -1,4 +1,4 @@
-using Marketplace.BaseLibrary.Enum;
+using Marketplace.BaseLibrary.Enum.Base;
 using Marketplace.BaseLibrary.Interfaces.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +16,8 @@ public static class UnitOfWorkDi
     /// <param name="services">Коллекция сервисов</param>
     /// <param name="lifetime">Время жизни зависимости</param>
     /// <returns>Модифицированная коллекция сервисов</returns>
-    public static IServiceCollection AddUnitOfWork<T>(this IServiceCollection services, DiLifetimeEnum lifetime = DiLifetimeEnum.Scoped) where T :  DbContext
+    public static void AddUnitOfWork<T>(this IServiceCollection services,
+        DiLifetimeEnum lifetime = DiLifetimeEnum.Scoped) where T :  DbContext
     {
         switch (lifetime)
         {
@@ -30,7 +31,5 @@ public static class UnitOfWorkDi
                 services.AddSingleton<IUnitOfWork, UnitOfWork<T>>();
                 break;
         }
-
-        return services;
     }
 }

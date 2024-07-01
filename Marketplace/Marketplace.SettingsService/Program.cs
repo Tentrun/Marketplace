@@ -3,10 +3,10 @@ using Marketplace.BaseLibrary.Utils;
 using Marketplace.BaseLibrary.Utils.HealthCheckWorker;
 using Marketplace.BaseLibrary.Utils.HealthCheckWorker.DI;
 using Marketplace.BaseLibrary.Utils.UnitOfWork.DI;
-using Marketplace.LoggerService.Data;
-using Marketplace.LoggerService.Data.Repository.Implementation;
-using Marketplace.LoggerService.Data.Repository.Interface;
-using Marketplace.LoggerService.Services;
+using Marketplace.SettingsService.Data;
+using Marketplace.SettingsService.Data.Repository.Implementation;
+using Marketplace.SettingsService.Data.Repository.Interface;
+using Marketplace.SettingsService.Services;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.EntityFrameworkCore;
@@ -17,11 +17,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddGrpc();
 builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 {
-    opt.UseNpgsql(builder.Configuration.GetConnectionString("LoggerPsSql"));
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("SettingsPsSql"));
 });
-builder.Services.AddScoped<ILogRepository, LogRepository>();
+builder.Services.AddScoped<ISettingRepository, SettingRepository>();
 builder.Services.AddUnitOfWork<ApplicationDbContext>();
-builder.Services.AddDatabaseHealthReporter(ServicesConst.LoggerService, "Сервис логгера");
+builder.Services.AddDatabaseHealthReporter(ServicesConst.SettingsService, "Сервис настроек");
 
 var app = builder.Build();
 
@@ -41,9 +41,9 @@ app.Lifetime.ApplicationStarted.Register(() =>
 });
 
 // Configure the HTTP request pipeline.
-app.MapGrpcService<LoggerService>();
+app.MapGrpcService<SettingsService>();
 app.MapGet("/",
     () =>
-        "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
+        $"{ServicesConst.SettingsService} work");
 
 app.Run();

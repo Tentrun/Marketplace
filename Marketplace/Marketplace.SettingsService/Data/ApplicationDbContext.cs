@@ -1,7 +1,7 @@
-using Marketplace.BaseLibrary.Entity.Base.Logger;
+using Marketplace.BaseLibrary.Entity.Base.ServiceSettings;
 using Microsoft.EntityFrameworkCore;
 
-namespace Marketplace.LoggerService.Data;
+namespace Marketplace.SettingsService.Data;
 
 public class ApplicationDbContext : DbContext
 {
@@ -12,7 +12,7 @@ public class ApplicationDbContext : DbContext
     }
 
     /// <summary>
-    /// ДбСет логов
+    /// ДбСет сервисов
     /// </summary>
-    public DbSet<Log> ServiceLogs { get; set; }
+    public DbSet<ServiceSetting> ServiceSettings { get; set; }
 }

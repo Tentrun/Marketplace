@@ -10,13 +10,22 @@ public static class MigrationHelper
         using var scope = provider.CreateScope();
         using var context = scope.ServiceProvider.GetRequiredService<T>();
 
-        //Создает БД, если ее нету
-        context.Database.EnsureCreated();
-        
-        //Проверка на новые миграции и последующее применение
-        if (context.Database.GetPendingMigrations().Any())
+        switch (context.Database.CanConnect())
         {
-            context.Database.Migrate();
+            case true:
+                //Проверка на новые миграции и последующее применение
+                if (context.Database.GetPendingMigrations().Any())
+                {
+                    context.Database.Migrate();
+                }
+                break;
+            case false:
+                //Создает БД, если ее нету
+                //С миграцией, по доке миграцию в последующем не применить
+                //Опасная штука
+                //TODO: снести нахуй
+                context.Database.EnsureCreated();
+                break;
         }
     }
 }
