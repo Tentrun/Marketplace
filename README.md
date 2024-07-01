@@ -52,7 +52,7 @@ docker run --name marketplace -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES
 [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 
-## Подключение различных сервисов
+## Подключение различных сервисов в Program.cs
 Подключение DbContext'a
 ```
 builder.Services.AddDbContext<ApplicationDbContext>(opt =>
