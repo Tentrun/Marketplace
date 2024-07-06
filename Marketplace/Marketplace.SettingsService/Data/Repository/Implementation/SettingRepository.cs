@@ -60,6 +60,7 @@ public class SettingRepository(ApplicationDbContext context) : BaseRepository<Se
                 return true;
             }
 
+            currentServiceSetting.Description = serviceSetting.Description;
             currentServiceSetting.ServiceStatusEnum = serviceSetting.ServiceStatusEnum;
             currentServiceSetting.UpdateDate = DateTime.UtcNow;
             await UpdateAsync(currentServiceSetting);

@@ -29,6 +29,7 @@ public class UnitOfWork<C> : IUnitOfWork where C : DbContext
             {
                 throw new CannotAccessToRepository($"Репозиторий {nameof(T)} is null");
             }
+            return (T)_repositories[type];
         }
 
         T? repo = _dbContext.GetService<T>();
