@@ -24,11 +24,11 @@ export class ServiceStatusPipePipe implements PipeTransform {
       default:
         switch (value){
           case 0:
-            return "Работает в умеренной нагрузке"
+            return "Работает"
           case 1:
-            return "Работает в повышенной нагрузке"
+            return "Загружен"
           case 2:
-            return "Не в сети"
+            return "Оффлайн"
           default:
             return ""
         }
