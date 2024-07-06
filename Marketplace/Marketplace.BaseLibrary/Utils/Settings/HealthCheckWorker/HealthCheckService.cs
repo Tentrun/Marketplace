@@ -1,7 +1,7 @@
 using Grpc.Net.Client;
 using Grpc.Net.Client.Balancer;
 
-namespace Marketplace.BaseLibrary.Utils.HealthCheckWorker;
+namespace Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker;
 
 public static class HealthCheckService
 {

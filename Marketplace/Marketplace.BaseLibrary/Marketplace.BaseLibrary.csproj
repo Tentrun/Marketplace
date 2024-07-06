@@ -40,7 +40,7 @@
           <OutputDir>obj\Debug\net8.0\</OutputDir>
           <Generator>MSBuild:Compile</Generator>
       </Protobuf>
-      <Protobuf Include="Utils\Logger\Proto\settings.proto">
+      <Protobuf Include="Utils\Settings\Proto\settings.proto">
         <GrpcServices>Both</GrpcServices>
         <Access>Public</Access>
         <ProtoCompile>True</ProtoCompile>

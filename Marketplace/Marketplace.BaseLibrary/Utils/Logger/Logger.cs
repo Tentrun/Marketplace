@@ -74,11 +74,13 @@ public static class Logger
     /// <summary>
     /// Отправка запроса на запись лога сервису логирования
     /// </summary>
-    private static async Task<bool> ExecuteCreateLogOperation(Log log)
+    private static async Task ExecuteCreateLogOperation(Log log)
     {
         try
         {
-            LogReply? reply = await LoggerExtension.GetLoggerClient().CreateLogAsync(new LogRequest
+            var loggerClient = await LoggerExtension.GetLoggerClient();
+            
+            LogReply? reply = await loggerClient.CreateLogAsync(new LogRequest
             {
                 LogType = (LogType)log.LogType,
                 LogDate = log.Time.ToTimestamp(),
@@ -86,8 +88,6 @@ public static class Logger
                 LogCallingMethod = log.CallingMethod,
                 LogJsonValue = log.LogValue
             });
-
-            return reply.WriteLogResult;
         }
         catch (System.Exception e)
         {

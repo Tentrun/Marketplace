@@ -1,7 +1,7 @@
 using Marketplace.BaseLibrary.Const;
 using Marketplace.BaseLibrary.Utils;
-using Marketplace.BaseLibrary.Utils.HealthCheckWorker;
-using Marketplace.BaseLibrary.Utils.HealthCheckWorker.DI;
+using Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker;
+using Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker.DI;
 using Marketplace.BaseLibrary.Utils.UnitOfWork.DI;
 using Marketplace.LoggerService.Data;
 using Marketplace.LoggerService.Data.Repository.Implementation;

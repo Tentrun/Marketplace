@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Hosting;
 
-namespace Marketplace.BaseLibrary.Utils.HealthCheckWorker;
+namespace Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker;
 
 /// <summary>
 /// Добавляет в бэкграунд воркер для хелзчека сервиса
@@ -30,6 +30,7 @@ public class HealthCheckBackgroundWorker(string name, string? serviceDescription
             }
             catch (System.Exception ex)
             {
+                //TODO: приделать логгер, если отвалился SettingsService
                 await Task.Delay(ErrorTimeout, stoppingToken).ConfigureAwait(false);
             }
         }

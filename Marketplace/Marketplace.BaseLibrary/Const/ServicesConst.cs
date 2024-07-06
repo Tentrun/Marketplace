@@ -11,4 +11,9 @@ public static class ServicesConst
     /// Имя сервиса логгера в БД
     /// </summary>
     public const string LoggerService = "LoggerService";
+    
+    /// <summary>
+    /// Имя сервиса продуктов в БД
+    /// </summary>
+    public const string ProductService = "ProductService";
 }

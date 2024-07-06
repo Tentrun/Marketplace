@@ -1,4 +1,5 @@
-using Grpc.Net.Client;
+using Marketplace.BaseLibrary.Const;
+using Marketplace.BaseLibrary.Utils.Settings;
 using static System.String;
 
 namespace Marketplace.BaseLibrary.Utils.Logger.Extension;
@@ -17,9 +18,8 @@ internal static class LoggerExtension
     /// Возвращает проинициализированного gRpc клиента логгера
     /// TODO: переделать на фабрику, а то все упадет в дальнейшем
     /// </summary>
-    internal static LoggerGrpcService.LoggerGrpcServiceClient GetLoggerClient()
+    internal static async Task<LoggerGrpcService.LoggerGrpcServiceClient> GetLoggerClient()
     {
-        GrpcChannel channel = GrpcChannel.ForAddress("http://localhost:5062");
-        return new LoggerGrpcService.LoggerGrpcServiceClient(channel);
+        return new LoggerGrpcService.LoggerGrpcServiceClient(await SettingsBaseService.GetGrpcServiceChannelByName(ServicesConst.SettingsService));
     }
 }

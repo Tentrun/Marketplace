@@ -1,4 +1,6 @@
+using Marketplace.BaseLibrary.Const;
 using Marketplace.BaseLibrary.Utils;
+using Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker.DI;
 using Marketplace.BaseLibrary.Utils.UnitOfWork.DI;
 using Marketplace.ProductService.Data;
 using Marketplace.ProductService.Data.Repository.Implementation;
@@ -15,6 +17,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 });
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddUnitOfWork<ApplicationDbContext>();
+builder.Services.AddDatabaseHealthReporter(ServicesConst.ProductService, "Сервис настроек");
 
 var app = builder.Build();
 
