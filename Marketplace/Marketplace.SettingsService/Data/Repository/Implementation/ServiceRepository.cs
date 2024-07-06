@@ -47,6 +47,7 @@ internal class ServiceRepository(ApplicationDbContext context) : IServiceReposit
         try
         {
             await context.BulkUpdateAsync(services);
+            await context.BulkSaveChangesAsync();
             return true;
         }
         catch (Exception e)

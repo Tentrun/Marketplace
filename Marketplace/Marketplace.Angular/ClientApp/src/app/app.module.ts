@@ -1,5 +1,14 @@
 import {NgDompurifySanitizer} from "@tinkoff/ng-dompurify";
-import {TUI_SANITIZER, TuiAlertModule, TuiDialogModule, TuiRootModule, TuiSvgModule} from "@taiga-ui/core";
+import {
+  TUI_SANITIZER,
+  TuiAlertModule,
+  TuiButtonModule,
+  TuiDialogModule,
+  TuiLinkModule,
+  TuiModeModule,
+  TuiRootModule,
+  TuiSvgModule
+} from "@taiga-ui/core";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
@@ -14,7 +23,7 @@ import {CounterComponent} from './counter/counter.component';
 import {FetchDataComponent} from './fetch-data/fetch-data.component';
 import {TuiBarModule} from "@taiga-ui/addon-charts";
 import {TuiAvatarLabeledModule, TuiAvatarModule, TuiFallbackSrcModule} from '@taiga-ui/experimental';
-import {TuiTabsModule} from "@taiga-ui/kit";
+import {TuiCarouselModule, TuiIslandModule, TuiPaginationModule, TuiTabsModule} from "@taiga-ui/kit";
 import {TuiAppBarModule} from "@taiga-ui/addon-mobile";
 import {NgOptimizedImage} from "@angular/common";
 import {ServicesStatusComponent} from "./pages/services-status/services-status.component";
@@ -47,7 +56,13 @@ import {ServicesStatusComponent} from "./pages/services-status/services-status.c
     TuiAvatarModule,
     TuiAvatarLabeledModule,
     TuiFallbackSrcModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    TuiCarouselModule,
+    TuiButtonModule,
+    TuiLinkModule,
+    TuiModeModule,
+    TuiIslandModule,
+    TuiPaginationModule
   ],
   providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}, provideHttpClient()],
   bootstrap: [AppComponent]
