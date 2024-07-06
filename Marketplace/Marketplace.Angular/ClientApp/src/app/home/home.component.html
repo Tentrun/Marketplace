@@ -19,6 +19,7 @@
         style="max-width: 60vh; max-height: 40vh"
         [draggable]="true"
         [(index)]="index"
+        [duration]="5000"
       ><ng-container *ngFor="let item of items">
         <tui-island [hoverable]="true" style="display: flex; flex-direction: column; flex-wrap: wrap; align-content: space-around; align-items: center; text-align: center" *tuiItem>
           <h4 style="font-family: 'Open Sans', sans-serif; font-optical-sizing: auto; font-weight: 300">
@@ -51,4 +52,7 @@
   <h1 style="font-family: 'Open Sans', sans-serif; font-optical-sizing: auto; font-weight: 300">
     Список товаров
   </h1>
+  <h3 style="font-family: 'Open Sans', sans-serif; font-optical-sizing: auto; font-weight: 300">
+      Товаров больше не быть, алиэкспресс забанил меня...
+  </h3>
 </div>
