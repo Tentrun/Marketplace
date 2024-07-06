@@ -9,7 +9,7 @@ public class SettingsController(ILogger<SettingsController> logger) : Controller
 {
     private readonly ILogger<SettingsController> _logger = logger;
 
-    [HttpGet(Name = "GetInstanceStatuses")]
+    [HttpGet("GetInstanceStatuses")]
     public async Task<IActionResult> GetInstanceStatuses()
     {
         return Ok(await SettingsBaseService.GetAllInstances());

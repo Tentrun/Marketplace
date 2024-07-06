@@ -11,7 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="8.0.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="8.0.6" />
     </ItemGroup>
 
     <ItemGroup>
@@ -23,6 +23,8 @@
 
     <ItemGroup>
       <Folder Include="ClientApp\src\app\pages\" />
+      <Folder Include="ClientApp\src\app\pipes\" />
+      <Folder Include="ClientApp\src\app\services\notificationService\" />
       <Folder Include="ClientApp\src\assets\icons\" />
     </ItemGroup>
 

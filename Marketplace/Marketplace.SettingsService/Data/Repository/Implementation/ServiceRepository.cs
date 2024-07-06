@@ -37,7 +37,12 @@ internal class ServiceRepository(ApplicationDbContext context) : IServiceReposit
             Logger.LogCritical("Произведена попытка обновить статусы инстансов, когда размер коллекции 0");
             return true;
         }
-        services.ForEach(x => x.ServiceStatusEnum = ServiceStatusEnum.Offline);
+        
+        services.ForEach(x =>
+        {
+            x.UpdateDate = DateTime.UtcNow;
+            x.ServiceStatusEnum = ServiceStatusEnum.Offline;
+        });
 
         try
         {

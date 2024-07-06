@@ -20,8 +20,8 @@ export class NavMenuComponent {
   }
 
   onClick(item: string): void {
-    this.router.navigate([`${item}`]).then(r => console.log("s"))
-    this.alerts.open(item).subscribe();
+    this.router.navigate([`${item}`]);
+    //this.alerts.open(item).subscribe();
   }
 
   collapse() {

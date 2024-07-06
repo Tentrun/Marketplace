@@ -33,7 +33,7 @@
           [(activeItemIndex)]="activeItemIndex">
           <button
             tuiTab
-            (click)="onClick('Каталог товаров')"
+            (click)="onClick('')"
           >
             <tui-svg
               src="tuiIconLayers"
@@ -72,6 +72,17 @@
               class="tui-space_right-1"
             ></tui-svg>
             Корзина
+          </button>
+
+          <button
+            tuiTab
+            (click)="onClick('infrastructure-status')"
+          >
+            <tui-svg
+              src="tuiIconInfo"
+              class="tui-space_right-1"
+            ></tui-svg>
+            Статус сервисов
           </button>
 
           <button

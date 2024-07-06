@@ -77,7 +77,9 @@ public class SettingRepository(ApplicationDbContext context) : BaseRepository<Se
     {
         try
         {
-            var result = await context.ServiceSettings.Where(x => x.Id != null).ToListAsync();
+            var result = await context.ServiceSettings.Where(x => x.Id != null)
+                .AsNoTracking()
+                .ToListAsync();
             return result;
         }
         catch (Exception e)
