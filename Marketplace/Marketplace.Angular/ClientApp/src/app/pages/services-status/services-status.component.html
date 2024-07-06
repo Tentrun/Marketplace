@@ -1,4 +1,7 @@
-<table class="tui-table mt-3" *ngIf="instances.length > 0">
+<tui-loader [hidden]="!isLoading" [showLoader]="isLoading">
+  <div [hidden]="!isLoading"  class="mt-5 text-center">Загрузка....</div>
+</tui-loader>
+<table class="tui-table mt-3" *ngIf="instances.length > 0 && !isLoading">
   <tbody>
   <tr class="tui-table__tr tui-table__tr_border_none">
     <th class="tui-table__th">Наименование сервиса</th>
@@ -17,7 +20,7 @@
   </tbody>
 </table>
 
-<div *ngIf="isError; then error_content">
+<div *ngIf="isError && !isLoading; then error_content">
 
 </div>
 <ng-template #error_content>

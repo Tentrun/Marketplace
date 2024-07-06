@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
 import {ReactiveFormsModule} from "@angular/forms";
 import {TuiCheckboxModule, TuiTagModule} from "@taiga-ui/kit";
-import {TuiButtonModule} from "@taiga-ui/core";
+import {TuiButtonModule, TuiLoaderModule} from "@taiga-ui/core";
 import {TuiTableModule} from "@taiga-ui/addon-table";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {TuiLetModule} from "@taiga-ui/cdk";
@@ -24,7 +24,8 @@ import {ServiceStatusPipePipe} from "../../pipes/service-status-pipe.pipe";
     NgIf,
     TuiLetModule,
     AsyncPipe,
-    ServiceStatusPipePipe
+    ServiceStatusPipePipe,
+    TuiLoaderModule
   ],
   templateUrl: './services-status.component.html',
   styleUrl: './services-status.component.less'
