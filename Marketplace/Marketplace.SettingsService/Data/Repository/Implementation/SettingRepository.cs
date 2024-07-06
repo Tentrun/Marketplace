@@ -34,12 +34,11 @@ public class SettingRepository(ApplicationDbContext context) : BaseRepository<Se
                 Logger.LogWarning($"Не обнаружено ни одного активного инстанса для сервиса {serviceName}");
                 return null;
             }
-
             return serviceSetting;
         }
         catch (Exception e)
         {
-            Logger.LogCritical(e.ToString());
+            Logger.LogCritical(e);
             return null;
         }
     }
@@ -68,8 +67,22 @@ public class SettingRepository(ApplicationDbContext context) : BaseRepository<Se
         }
         catch (Exception e)
         {
-            Logger.LogCritical(e.ToString());
+            Logger.LogCritical(e);
             return false;
+        }
+    }
+
+    public async Task<List<ServiceSetting>> GetAllInstances()
+    {
+        try
+        {
+            var result = await context.ServiceSettings.Where(x => x.Id != null).ToListAsync();
+            return result;
+        }
+        catch (Exception e)
+        {
+            Logger.LogCritical(e);
+            return new List<ServiceSetting>();
         }
     }
 }

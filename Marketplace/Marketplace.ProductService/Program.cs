@@ -1,10 +1,13 @@
 using Marketplace.BaseLibrary.Const;
 using Marketplace.BaseLibrary.Utils;
+using Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker;
 using Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker.DI;
 using Marketplace.BaseLibrary.Utils.UnitOfWork.DI;
 using Marketplace.ProductService.Data;
 using Marketplace.ProductService.Data.Repository.Implementation;
 using Marketplace.ProductService.Data.Repository.Interface;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,9 +20,21 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 });
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddUnitOfWork<ApplicationDbContext>();
-builder.Services.AddDatabaseHealthReporter(ServicesConst.ProductService, "Сервис настроек");
+builder.Services.AddDatabaseHealthReporter(ServicesConst.ProductService, "Сервис продуктов");
 
 var app = builder.Build();
+
+//Нужно для получения адреса приложения для хелзчекера из рантайма, но, выглядит стремно
+app.Lifetime.ApplicationStarted.Register(() =>
+{
+    var server = app.Services.GetRequiredService<IServer>();
+    var serverAddressesFeature = server.Features.Get<IServerAddressesFeature>();
+
+    if (serverAddressesFeature == null) return;
+
+    HealthCheckService.ApplicationAddress =
+        serverAddressesFeature.Addresses.FirstOrDefault(x => x.Contains("http"));
+});
 
 //Применение авто миграций, если существуют новые добавленные
 app.Services.ApplyMigrations<ApplicationDbContext>();

@@ -11,6 +11,9 @@ public class SettingsService(IUnitOfWork unitOfWork) : SettingsGrpcService.Setti
 {
     private readonly ISettingRepository _repository = unitOfWork.GetRepository<ISettingRepository>(); 
     
+    /// <summary>
+    /// Обновляет информацию в БД по информации из хелз репорта
+    /// </summary>
     public override async Task<HealthReportResponse> SendHealthReport(HealthReportRequest request, ServerCallContext context)
     {
         return new HealthReportResponse
@@ -28,6 +31,9 @@ public class SettingsService(IUnitOfWork unitOfWork) : SettingsGrpcService.Setti
         };
     }
 
+    /// <summary>
+    /// Получает настройки инстанса
+    /// </summary>
     public override async Task<ServiceSettingsResponse> GetServiceSettings(ServiceSettingsRequest request,
         ServerCallContext context)
     {
@@ -39,5 +45,28 @@ public class SettingsService(IUnitOfWork unitOfWork) : SettingsGrpcService.Setti
             Ip = setting?.Ip,
             Port = setting?.Port
         };
+    }
+
+    /// <summary>
+    /// Метод в принципе преднозначен для вебки, получает все инстансы из БД под вывод в вебке
+    /// </summary>
+    public override async Task<GetInstancesStatusesResponse> GetInstancesStatuses(GetInstancesStatusesRequest request,
+        ServerCallContext context)
+    {
+        var instances = await _repository.GetAllInstances();
+        var response = new GetInstancesStatusesResponse();
+        foreach (var instance in instances)
+        {
+            response.ServiceInstances.Add(new ServiceInstance
+            {
+                ServiceName = instance.Name,
+                Ip = instance.Ip,
+                Port = instance.Port,
+                ServiceStatus = (ServiceStatus)instance.ServiceStatusEnum,
+                Description = instance.Description
+            });
+        }
+
+        return response;
     }
 }

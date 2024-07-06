@@ -16,4 +16,9 @@ public static class ServicesConst
     /// Имя сервиса продуктов в БД
     /// </summary>
     public const string ProductService = "ProductService";
+    
+    /// <summary>
+    /// Имя сервиса WebpApi в БД
+    /// </summary>
+    public const string WebApi = "WebApi";
 }

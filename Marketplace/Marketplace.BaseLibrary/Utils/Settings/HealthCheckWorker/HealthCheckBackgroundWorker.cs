@@ -9,7 +9,7 @@ namespace Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker;
 public class HealthCheckBackgroundWorker(string name, string? serviceDescription = "") : BackgroundService
 {
     /// <summary>
-    /// Таймаут при вылете исключения, по стандарту 30 секунд
+    /// Таймаут при вылете исключения, по стандарту 15 секунд
     /// </summary>
     private TimeSpan ErrorTimeout { get; } = TimeSpan.FromSeconds(15);
     
@@ -27,6 +27,7 @@ public class HealthCheckBackgroundWorker(string name, string? serviceDescription
                 await HealthCheckService.SendHealthReport(name, serviceDescription).ConfigureAwait(false);
 
                 nextRun = DateTime.Now.AddSeconds(60);
+                await Task.Delay(timeout, stoppingToken);
             }
             catch (System.Exception ex)
             {

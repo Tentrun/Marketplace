@@ -20,6 +20,6 @@ internal static class LoggerExtension
     /// </summary>
     internal static async Task<LoggerGrpcService.LoggerGrpcServiceClient> GetLoggerClient()
     {
-        return new LoggerGrpcService.LoggerGrpcServiceClient(await SettingsBaseService.GetGrpcServiceChannelByName(ServicesConst.SettingsService));
+        return new LoggerGrpcService.LoggerGrpcServiceClient(await SettingsBaseService.GetGrpcServiceChannelByName(ServicesConst.LoggerService));
     }
 }

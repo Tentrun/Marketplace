@@ -25,7 +25,7 @@ internal class ServiceRepository(ApplicationDbContext context) : IServiceReposit
         }
         catch (Exception e)
         {
-            Logger.LogCritical(e.ToString());
+            Logger.LogCritical(e);
             return new List<ServiceSetting>();
         }
     }
@@ -46,7 +46,7 @@ internal class ServiceRepository(ApplicationDbContext context) : IServiceReposit
         }
         catch (Exception e)
         {
-            Logger.LogCritical(e.ToString());
+            Logger.LogCritical(e);
             return false;
         }
     }

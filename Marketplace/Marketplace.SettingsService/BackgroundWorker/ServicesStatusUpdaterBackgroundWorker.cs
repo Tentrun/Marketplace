@@ -37,7 +37,7 @@ public class ServicesStatusUpdaterBackgroundWorker(IUnitOfWork unitOfWork) : Bac
             }
             catch (System.Exception ex)
             {
-                Logger.LogCritical(ex.ToString()); 
+                Logger.LogCritical(ex); 
                 await Task.Delay(ErrorTimeout, stoppingToken).ConfigureAwait(false);
             }
         }

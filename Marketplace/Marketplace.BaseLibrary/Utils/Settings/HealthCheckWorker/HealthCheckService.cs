@@ -23,9 +23,8 @@ public static class HealthCheckService
             Ip = serviceAddress.EndPoint.Host,
             Port = serviceAddress.EndPoint.Port,
             ServiceStatus = ServiceStatus.Available,
-            Description = null
+            Description = string.IsNullOrEmpty(description) ? null : description
         });
-        
         return result.Updated;
     }
 

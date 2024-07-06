@@ -23,9 +23,16 @@ public class Log
     {
         CallingClass = callingClass.FormatCallingMethod();
         CallingMethod = callingMethod;
-        LogValue = System.Text.Json.JsonSerializer.Serialize(logValue);
         LogType = logType;
         Time = DateTime.UtcNow;
+        try
+        {
+            LogValue = System.Text.Json.JsonSerializer.Serialize(logValue);
+        }
+        catch (System.Exception e)
+        {
+            LogValue = logValue.ToString();
+        }
     }
 
     public Log(LogRequest request)
