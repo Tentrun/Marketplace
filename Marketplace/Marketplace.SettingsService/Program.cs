@@ -1,4 +1,5 @@
 using Marketplace.BaseLibrary.Const;
+using Marketplace.BaseLibrary.Di;
 using Marketplace.BaseLibrary.Interfaces.Base.Repository;
 using Marketplace.BaseLibrary.Utils;
 using Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker;
@@ -25,6 +26,7 @@ builder.Services.AddScoped<ISettingRepository, SettingRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddUnitOfWork<ApplicationDbContext>();
 builder.Services.AddDatabaseHealthReporter(ServicesConst.SettingsService, "Сервис настроек");
+BaseInfrastructureDi.AddBaseServicesToDi(builder.Configuration);
 
 //Бекграунд воркер обновления статусов инстансов
 builder.Services.AddHostedService(x =>

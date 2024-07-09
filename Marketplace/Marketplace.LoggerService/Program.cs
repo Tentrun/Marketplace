@@ -1,4 +1,5 @@
 using Marketplace.BaseLibrary.Const;
+using Marketplace.BaseLibrary.Di;
 using Marketplace.BaseLibrary.Utils;
 using Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker;
 using Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker.DI;
@@ -22,6 +23,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 builder.Services.AddScoped<ILogRepository, LogRepository>();
 builder.Services.AddUnitOfWork<ApplicationDbContext>();
 builder.Services.AddDatabaseHealthReporter(ServicesConst.LoggerService, "Сервис логгера");
+BaseInfrastructureDi.AddBaseServicesToDi(builder.Configuration);
 
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
 using Marketplace.BaseLibrary.Const;
+using Marketplace.BaseLibrary.Di;
 using Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker;
 using Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker.DI;
 using Microsoft.AspNetCore.Hosting.Server;
@@ -13,6 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDatabaseHealthReporter(ServicesConst.WebApi, "Сервис web api");
+BaseInfrastructureDi.AddBaseServicesToDi(builder.Configuration);
 
 var app = builder.Build();
 
