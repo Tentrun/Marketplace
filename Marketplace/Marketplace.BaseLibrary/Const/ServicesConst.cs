@@ -21,4 +21,9 @@ public static class ServicesConst
     /// Имя сервиса WebpApi в БД
     /// </summary>
     public const string WebApi = "WebApi";
+    
+    /// <summary>
+    /// Имя сервиса Gateway в БД
+    /// </summary>
+    public const string ApiGateway = "ApiGateway";
 }

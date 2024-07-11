@@ -2,9 +2,8 @@ using Marketplace.BaseLibrary.Const;
 using Marketplace.BaseLibrary.Di;
 using Marketplace.BaseLibrary.Interfaces.Base.Repository;
 using Marketplace.BaseLibrary.Utils;
-using Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker;
-using Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker.DI;
-using Marketplace.BaseLibrary.Utils.UnitOfWork.DI;
+using Marketplace.BaseLibrary.Utils.Base.Settings.HealthCheckWorker;
+using Marketplace.BaseLibrary.Utils.Base.Settings.HealthCheckWorker.DI;
 using Marketplace.SettingsService.BackgroundWorker;
 using Marketplace.SettingsService.Data;
 using Marketplace.SettingsService.Data.Repository.Implementation;
@@ -12,21 +11,15 @@ using Marketplace.SettingsService.Data.Repository.Interface;
 using Marketplace.SettingsService.Services;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
-builder.Services.AddDbContext<ApplicationDbContext>(opt =>
-{
-    opt.UseNpgsql(builder.Configuration.GetConnectionString("SettingsPsSql"));
-});
+builder.Services.AddBaseServicesToDi<ApplicationDbContext>(builder.Configuration, "SettingsPsSql");
+builder.Services.AddDatabaseHealthReporter(ServicesConst.SettingsService, "Сервис настроек");
 builder.Services.AddScoped<ISettingRepository, SettingRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
-builder.Services.AddUnitOfWork<ApplicationDbContext>();
-builder.Services.AddDatabaseHealthReporter(ServicesConst.SettingsService, "Сервис настроек");
-BaseInfrastructureDi.AddBaseServicesToDi(builder.Configuration);
 
 //Бекграунд воркер обновления статусов инстансов
 builder.Services.AddHostedService(x =>

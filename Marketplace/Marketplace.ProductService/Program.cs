@@ -1,28 +1,22 @@
 using Marketplace.BaseLibrary.Const;
 using Marketplace.BaseLibrary.Di;
 using Marketplace.BaseLibrary.Utils;
-using Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker;
-using Marketplace.BaseLibrary.Utils.Settings.HealthCheckWorker.DI;
-using Marketplace.BaseLibrary.Utils.UnitOfWork.DI;
+using Marketplace.BaseLibrary.Utils.Base.Settings.HealthCheckWorker;
+using Marketplace.BaseLibrary.Utils.Base.Settings.HealthCheckWorker.DI;
 using Marketplace.ProductService.Data;
 using Marketplace.ProductService.Data.Repository.Implementation;
 using Marketplace.ProductService.Data.Repository.Interface;
+using Marketplace.ProductService.GrpcServices;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
-builder.Services.AddDbContext<ApplicationDbContext>(opt =>
-{
-    opt.UseNpgsql(builder.Configuration.GetConnectionString("ProductsPsSql"));
-});
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddUnitOfWork<ApplicationDbContext>();
+builder.Services.AddBaseServicesToDi<ApplicationDbContext>(builder.Configuration, "ProductsPsSql");
 builder.Services.AddDatabaseHealthReporter(ServicesConst.ProductService, "Сервис продуктов");
-BaseInfrastructureDi.AddBaseServicesToDi(builder.Configuration);
+builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
 
 var app = builder.Build();
 
@@ -42,7 +36,7 @@ app.Lifetime.ApplicationStarted.Register(() =>
 app.Services.ApplyMigrations<ApplicationDbContext>();
 
 // Configure the HTTP request pipeline.
-//app.MapGrpcService<GreeterService>();
+app.MapGrpcService<GrpcService>();
 app.MapGet("/",
     () =>
         "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");

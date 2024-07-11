@@ -25,11 +25,10 @@
           <h4 style="font-family: 'Open Sans', sans-serif; font-optical-sizing: auto; font-weight: 300">
             {{item}}
           </h4>
-          <img draggable="false" style="cursor:pointer; border-radius: 10px" ngSrc="assets/images/avatar.jpg" alt="" height="200" width="450" >
-
-          <!-- TODO: update documentation here -->
+          <img draggable="false" style="cursor:pointer; border-radius: 10px" ngSrc="assets/images/avatar.jpg" alt="" height="200" width="450" [priority]="true"/>
           <a
             class="mt-2"
+            [draggable]="false"
             href=""
             tuiButton
           >

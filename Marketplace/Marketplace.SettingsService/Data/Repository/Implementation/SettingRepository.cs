@@ -2,14 +2,16 @@ using Marketplace.BaseLibrary.Const;
 using Marketplace.BaseLibrary.Entity.Base.ServiceSettings;
 using Marketplace.BaseLibrary.Enum.Base;
 using Marketplace.BaseLibrary.Interfaces.Base;
-using Marketplace.BaseLibrary.Utils.Logger;
+using Marketplace.BaseLibrary.Utils.Base.Logger;
 using Marketplace.SettingsService.Data.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace Marketplace.SettingsService.Data.Repository.Implementation;
 
-public class SettingRepository(ApplicationDbContext context) : BaseRepository<ServiceSetting>(context), ISettingRepository
+public class SettingRepository(IDbContextFactory<ApplicationDbContext> dbContextFactory) : BaseRepository<ServiceSetting, ApplicationDbContext>(dbContextFactory), ISettingRepository
 {
+    private readonly ApplicationDbContext _context = dbContextFactory.CreateDbContext();
+    
     /// <summary>
     /// Возвращает настройки сервиса по переданному названию сервиса (указывается в background worker'e)
     /// </summary>
@@ -25,7 +27,7 @@ public class SettingRepository(ApplicationDbContext context) : BaseRepository<Se
                 return null;
             }
 
-            var serviceSetting = await context.ServiceSettings.AsNoTracking().FirstOrDefaultAsync(x =>
+            var serviceSetting = await _context.ServiceSettings.AsNoTracking().FirstOrDefaultAsync(x =>
                 x.Name == serviceName && x.ServiceStatusEnum != ServiceStatusEnum.Offline);
 
             //Проверяем не логгер ли был запрошен и вернулся null, если нет, то логгируем
@@ -50,7 +52,7 @@ public class SettingRepository(ApplicationDbContext context) : BaseRepository<Se
     {
         try
         {
-            var currentServiceSetting = await context.ServiceSettings.FirstOrDefaultAsync(x =>
+            var currentServiceSetting = await _context.ServiceSettings.FirstOrDefaultAsync(x =>
                 x.Name == serviceSetting.Name && x.Ip == serviceSetting.Ip && x.Port == serviceSetting.Port);
             
             if (currentServiceSetting is null)
@@ -77,7 +79,7 @@ public class SettingRepository(ApplicationDbContext context) : BaseRepository<Se
     {
         try
         {
-            var result = await context.ServiceSettings.Where(x => x.Id != null)
+            var result = await _context.ServiceSettings.Where(x => x.Id != null)
                 .AsNoTracking()
                 .ToListAsync();
             return result;

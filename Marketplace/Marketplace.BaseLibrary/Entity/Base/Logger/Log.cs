@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Marketplace.BaseLibrary.Enum.Base;
-using Marketplace.BaseLibrary.Utils.Logger.Extension;
+using Marketplace.BaseLibrary.Utils.Base.Logger.Extension;
 
 namespace Marketplace.BaseLibrary.Entity.Base.Logger;
 

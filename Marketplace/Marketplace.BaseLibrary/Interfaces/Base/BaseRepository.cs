@@ -8,15 +8,17 @@ namespace Marketplace.BaseLibrary.Interfaces.Base;
 /// Базовый репозиторий для наследования, с базовой логикой, для последующего переопределения, или использования как есть
 /// </summary>
 /// <typeparam name="T">Тип сущности репозитория</typeparam>
-public abstract class BaseRepository<T> : IBaseRepository<T>
-    where T : class
+/// <typeparam name="C">S</typeparam>
+public abstract class BaseRepository<T, C> : IBaseRepository<T>
+    where T : class 
+    where C : DbContext
 {
     private readonly DbSet<T> _dbSet;
     private readonly DbContext _dbContext;
 
-    protected BaseRepository(DbContext dbContext)
+    protected BaseRepository(IDbContextFactory<C> dbContextFactory)
     {
-        _dbContext = dbContext;
+        _dbContext = dbContextFactory.CreateDbContext();
         _dbSet = _dbContext.Set<T>();
     }
     

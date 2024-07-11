@@ -1,14 +1,16 @@
 using EFCore.BulkExtensions;
 using Marketplace.BaseLibrary.Entity.Base.ServiceSettings;
 using Marketplace.BaseLibrary.Enum.Base;
-using Marketplace.BaseLibrary.Utils.Logger;
+using Marketplace.BaseLibrary.Utils.Base.Logger;
 using Marketplace.SettingsService.Data.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace Marketplace.SettingsService.Data.Repository.Implementation;
 
-internal class ServiceRepository(ApplicationDbContext context) : IServiceRepository
+internal class ServiceRepository(IDbContextFactory<ApplicationDbContext> dbContextFactory) : IServiceRepository
 {
+    private readonly ApplicationDbContext _context = dbContextFactory.CreateDbContext();
+    
     /// <summary>
     /// Возвращает коллекцию сервисов, которые не проходят по таймауту оффлайна
     /// </summary>
@@ -17,7 +19,7 @@ internal class ServiceRepository(ApplicationDbContext context) : IServiceReposit
         try
         {
             DateTime currentTime = DateTime.UtcNow;
-            var result = await context.ServiceSettings
+            var result = await _context.ServiceSettings
                 //Так же легче высчитать на серваке по дате, ибо выборка по времени очень грузит БД
                 .Where(x => x.ServiceStatusEnum != ServiceStatusEnum.Offline)
                 .ToListAsync();
@@ -46,8 +48,8 @@ internal class ServiceRepository(ApplicationDbContext context) : IServiceReposit
 
         try
         {
-            await context.BulkUpdateAsync(services);
-            await context.BulkSaveChangesAsync();
+            await _context.BulkUpdateAsync(services);
+            await _context.BulkSaveChangesAsync();
             return true;
         }
         catch (Exception e)

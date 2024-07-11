@@ -32,20 +32,18 @@
       <Folder Include="Entity\Base\" />
     </ItemGroup>
     <ItemGroup>
-      <Protobuf Include="Utils\Logger\Proto\logger.proto">
-          <GrpcServices>Both</GrpcServices>
-          <Access>Public</Access>
-          <ProtoCompile>True</ProtoCompile>
-          <CompileOutputs>True</CompileOutputs>
-          <OutputDir>obj\Debug\net8.0\</OutputDir>
-          <Generator>MSBuild:Compile</Generator>
-      </Protobuf>
-      <Protobuf Include="Utils\Settings\Proto\settings.proto">
+      <Protobuf Include="Proto\Base\baseRequest.proto">
         <GrpcServices>Both</GrpcServices>
         <Access>Public</Access>
         <ProtoCompile>True</ProtoCompile>
         <CompileOutputs>True</CompileOutputs>
         <OutputDir>obj\Debug\net8.0\</OutputDir>
+        <Generator>MSBuild:Compile</Generator>
+      </Protobuf>
+      <Protobuf Include="Utils\Base\Logger\Proto\logger.proto">
+        <Generator>MSBuild:Compile</Generator>
+      </Protobuf>
+      <Protobuf Include="Utils\Base\Settings\Proto\settings.proto">
         <Generator>MSBuild:Compile</Generator>
       </Protobuf>
     </ItemGroup>

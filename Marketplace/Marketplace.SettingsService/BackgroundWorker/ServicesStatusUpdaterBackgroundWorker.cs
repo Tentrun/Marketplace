@@ -1,5 +1,5 @@
 using Marketplace.BaseLibrary.Interfaces.Base.Repository;
-using Marketplace.BaseLibrary.Utils.Logger;
+using Marketplace.BaseLibrary.Utils.Base.Logger;
 using Marketplace.SettingsService.Data.Repository.Interface;
 
 namespace Marketplace.SettingsService.BackgroundWorker;

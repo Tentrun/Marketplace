@@ -2,22 +2,22 @@ using System.Collections;
 using Marketplace.BaseLibrary.Exception.Data;
 using Marketplace.BaseLibrary.Interfaces.Base.Repository;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Marketplace.BaseLibrary.Utils.UnitOfWork;
 
 public class UnitOfWork<C> : IUnitOfWork where C : DbContext
 {
-    public UnitOfWork(C dbContext)
-    {
-        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-        _repositories = new Hashtable();
-    }
-
-    private readonly DbContext _dbContext;
     private readonly Hashtable _repositories;
+    private readonly IServiceProvider _serviceProvider;
 
     private bool _disposed;
+    
+    public UnitOfWork(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+        _repositories = new Hashtable();
+    }
 
     public T GetRepository<T>() where T : class
     {
@@ -32,7 +32,10 @@ public class UnitOfWork<C> : IUnitOfWork where C : DbContext
             return (T)_repositories[type];
         }
 
-        T? repo = _dbContext.GetService<T>();
+        //Т.к. я переделал на фабрику контекстов, но, есть желание сохранить unitOfWork
+        //Придется делать скоп, оттуда доставать сервайс
+        //Если использовать _content.GetService<T> упадет, т.к. контекста теперь нету в скопе, он без инжекта
+        var repo = _serviceProvider.GetRequiredService<T>();
         _repositories.Add(type, repo);
 
         if (repo is null)
@@ -56,7 +59,7 @@ public class UnitOfWork<C> : IUnitOfWork where C : DbContext
             if (disposing)
             {
                 //dispose managed resources
-                _dbContext.Dispose();
+                //_dbContext.Dispose();
             }
         }
         //dispose unmanaged resources

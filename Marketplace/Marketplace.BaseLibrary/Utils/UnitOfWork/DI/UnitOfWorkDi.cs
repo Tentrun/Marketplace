@@ -24,6 +24,7 @@ public static class UnitOfWorkDi
             case DiLifetimeEnum.Transient:
                 services.AddTransient<IUnitOfWork, UnitOfWork<T>>();
                 break;
+            //В данный момент работает только scoped, т.к. все контексты scoped
             case DiLifetimeEnum.Scoped:
                 services.AddScoped<IUnitOfWork, UnitOfWork<T>>();
                 break;
