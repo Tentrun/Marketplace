@@ -61,6 +61,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 });
 ```
 
+Для получения настроек сервисов в Program.cs обязательно вызывать метод базовой инициализации инфраструктуры
+``` 
+BaseInfrastructureDi.AddBaseServicesToDi(builder.Configuration);
+```
+
 Подключение UnitOfWork для работы с репозиториями
 ``` 
 builder.Services.AddUnitOfWork<ApplicationDbContext>();
