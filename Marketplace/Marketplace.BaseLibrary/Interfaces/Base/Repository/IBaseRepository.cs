@@ -6,7 +6,7 @@ namespace Marketplace.BaseLibrary.Interfaces.Base.Repository;
 /// Базовый репозиторий для наследования
 /// </summary>
 /// <typeparam name="T">Тип сущности репозитория</typeparam>
-public interface IBaseRepository<T> where T : class
+public interface IBaseRepository<T> : IDisposable, IAsyncDisposable where T : class
 {
     public Task<bool> Create(T entity);
     public Task<bool> CreateAsync(T entity);

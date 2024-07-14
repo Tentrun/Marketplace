@@ -11,8 +11,7 @@ namespace Marketplace.BaseLibrary.Implementation;
 /// <typeparam name="C">Тип контекста фабрики (check remarks)</typeparam>
 /// <remarks>К сожалению, EF Core не умеет приводить IDbContextFactory от базового контекста к строго типизированному, даже если тот является наследником базового.</remarks>
 /// <remarks> По этому придется использовать такой костыль, до лучших времен</remarks>
-public abstract class BaseRepository<T, C> : IBaseRepository<T>
-    where T : class 
+public abstract class BaseRepository<T, C> : IBaseRepository<T> where T : class 
     where C : DbContext
 {
     private readonly DbSet<T> _dbSet;
@@ -86,7 +85,7 @@ public abstract class BaseRepository<T, C> : IBaseRepository<T>
     {
         _dbSet.Remove(entity);
         _dbContext.SaveChanges();
-        
+
         return Task.FromResult(true);
     }
 
@@ -113,6 +112,7 @@ public abstract class BaseRepository<T, C> : IBaseRepository<T>
         params Expression<Func<T, object>>[] includeProperties)
     {
         var query =  GetWithPredicate(includeProperties);
+
         return Task.FromResult(query.AsEnumerable().Where(predicate).ToList());
     }
  
@@ -126,12 +126,32 @@ public abstract class BaseRepository<T, C> : IBaseRepository<T>
         params Expression<Func<T, object>>[] includeProperties)
     {
         var query =  GetWithPredicate(includeProperties);
+
         return Task.FromResult(query.AsEnumerable().FirstOrDefault(predicate));
     }
     
     private IQueryable<T?> GetWithPredicate(params Expression<Func<T, object>>[] includeProperties)
     {
         IQueryable<T> query = _dbSet;
+
         return includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+    }
+
+    public void Dispose()
+    {
+        if (_dbContext != null)
+        {
+            _dbContext.Dispose();
+        }
+        GC.SuppressFinalize(this);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_dbContext != null)
+        {
+            await _dbContext.DisposeAsync();
+        }
+        GC.SuppressFinalize(this);
     }
 }

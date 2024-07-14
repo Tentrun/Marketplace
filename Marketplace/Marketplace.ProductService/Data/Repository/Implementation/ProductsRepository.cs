@@ -20,6 +20,7 @@ public class ProductsRepository : BaseRepository<Product, ApplicationDbContext>,
     public async Task<List<Product>> GetAllProductsOfTheDay()
     {
         var result = await _dbContext.ProductsOfTheDay.Where(x => x.Id != null).ToListAsync();
+        await _dbContext.DisposeAsync();
         return result;
     }
 }

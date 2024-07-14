@@ -26,6 +26,30 @@ public static class BaseResponseExtension
         return response;
     }
     
+    /// <summary>
+    /// Конструктор базового ответа
+    /// </summary>
+    /// <param name="request">Базовый запрос к сервису</param>
+    /// <param name="responseBody">Ответ от сервиса</param>
+    public static BaseResponse GenerateBaseResponse(BaseRequest request, Struct? responseBody)
+    {
+        var response = new BaseResponse
+        {
+            Id = request.Id,
+            Date = DateTime.UtcNow.ToTimestamp(),
+            ResponseBody = null
+        };
+
+        if (responseBody != null)
+        {
+            response.ResponseBody = responseBody;
+            return response;
+        }
+        
+        throw new NullReferenceException(
+            "В конструктор базового ответа не был передан ответ, формирование ответа невозможно!");
+    }
+    
     public static BaseResponse GenerateBaseResponseWithError(this BaseRequest request, string errorText, string? errorCode = null)
     {
         var response = new BaseResponse

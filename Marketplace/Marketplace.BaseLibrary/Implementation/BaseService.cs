@@ -40,6 +40,11 @@ public abstract class BaseService : IBaseService
         //Получаем метод от текущего сервиса
         MethodInfo? requestedMethod = GetType().GetMethod(method);
 
+        if (requestedMethod == null)
+        {
+            throw new NullReferenceException($"Метод {method} не обнаружен доступным для вызова");
+        }
+        
         //Преобразуем в таску для ожидания окончания операции
         Task task = (Task)requestedMethod!.Invoke(this, null)!;
         
@@ -58,5 +63,19 @@ public abstract class BaseService : IBaseService
 
         //Возвращаем ответ тому, кто вызывал сервис
         return ServiceResponse;
+    }
+
+    public void Dispose()
+    {
+        UnitOfWork.Dispose();
+        GC.SuppressFinalize(this);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (UnitOfWork is IAsyncDisposable unitOfWorkAsyncDisposable)
+            await unitOfWorkAsyncDisposable.DisposeAsync();
+        else
+            UnitOfWork.Dispose();
     }
 }

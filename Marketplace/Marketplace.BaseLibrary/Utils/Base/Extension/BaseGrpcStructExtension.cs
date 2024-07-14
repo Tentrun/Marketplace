@@ -12,7 +12,7 @@ public static class BaseGrpcStructExtension
     /// <param name="body">Тело запроса</param>
     /// <param name="paramName">Имя параметра (ключ)</param>
     /// <param name="obj">Значение параметра (значение)</param>
-    public static void AddFieldToGrpcStruct(this Struct body, string paramName, object? obj)
+    public static void AddFieldToGrpcStruct(this Struct? body, string paramName, object? obj)
     {
         //Проверяем не переданы ли пустые параметры, если ключ или значние пустое - выходим
         if (obj == null || string.IsNullOrWhiteSpace(paramName))
@@ -20,6 +20,11 @@ public static class BaseGrpcStructExtension
             return;
         }
 
+        if (body == null)
+        {
+            body = new Struct();
+        }
+        
         //Сериализованный объект, который будет являться значнием поля
         string? serializedObject;
 

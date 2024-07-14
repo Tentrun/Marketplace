@@ -1,9 +1,8 @@
 using Grpc.Core;
 using Marketplace.BaseLibrary;
-using Marketplace.BaseLibrary.Utils.Base.Extension;
 using Marketplace.BaseLibrary.Utils.Base.Logger;
 using Marketplace.ProductService.Infrastructure.Interfaces;
-using static Marketplace.BaseLibrary.Utils.Base.Extension.BaseRequestExtension;
+using static Marketplace.BaseLibrary.Utils.Base.Extension.BaseResponseExtension;
 
 namespace Marketplace.ProductService.GrpcServices;
 

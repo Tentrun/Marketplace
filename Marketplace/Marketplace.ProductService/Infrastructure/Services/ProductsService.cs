@@ -7,7 +7,7 @@ using Marketplace.ProductService.Infrastructure.Interfaces;
 
 namespace Marketplace.ProductService.Infrastructure.Services;
 
-public class ProductsService : BaseService, IProductsService
+public class ProductsService : BaseService, IProductsService 
 {
     public ProductsService(IUnitOfWork unitOfWork) : base(unitOfWork)
     {
@@ -18,7 +18,7 @@ public class ProductsService : BaseService, IProductsService
     /// </summary>
     public async Task GetProductsOfTheDay()
     {
-        var productsRepository = UnitOfWork.GetRepository<IProductsRepository>();
+        await using var productsRepository = UnitOfWork.GetRepository<IProductsRepository>();
         var products = await productsRepository.GetAllProductsOfTheDay();
 
         var response = new Struct();

@@ -1,5 +1,7 @@
 using System.Text;
 using Google.Protobuf.WellKnownTypes;
+using Marketplace.BaseLibrary.Const;
+using Marketplace.BaseLibrary.Utils.Base.Settings;
 using static Marketplace.BaseLibrary.Utils.Base.Logger.Logger;
 
 namespace Marketplace.BaseLibrary.Utils.Base.Extension;
@@ -59,31 +61,7 @@ public static class BaseRequestExtension
         LogCritical(error);
         return false;
     }
-
-    /// <summary>
-    /// Конструктор базового ответа
-    /// </summary>
-    /// <param name="request">Базовый запрос к сервису</param>
-    /// <param name="responseBody">Ответ от сервиса</param>
-    public static BaseResponse GenerateBaseResponse(BaseRequest request, Struct? responseBody)
-    {
-        var response = new BaseResponse
-        {
-            Id = request.Id,
-            Date = DateTime.UtcNow.ToTimestamp(),
-            ResponseBody = null
-        };
-
-        if (responseBody != null)
-        {
-            response.ResponseBody = responseBody;
-            return response;
-        }
-        
-        throw new NullReferenceException(
-            "В конструктор базового ответа не был передан ответ, формирование ответа невозможно!");
-    }
-
+    
     /// <summary>
     /// Создает базовый запрос с заполнеными полями и пустым телом запроса
     /// </summary>
@@ -91,9 +69,9 @@ public static class BaseRequestExtension
     /// <param name="targetServiceMethod">Метод сервиса для обращения</param>
     /// <param name="callerMethod"></param>
     /// <returns></returns>
-    public static BaseRequest GenerateServiceBaseRequest(string targetService, string targetServiceMethod, string callerMethod)
+    public static BaseRequest GenerateServiceBaseRequest(string targetService, string targetServiceMethod, string callerService)
     {
-        if (string.IsNullOrWhiteSpace(targetService) || string.IsNullOrWhiteSpace(targetServiceMethod) || string.IsNullOrWhiteSpace(callerMethod))
+        if (string.IsNullOrWhiteSpace(targetService) || string.IsNullOrWhiteSpace(targetServiceMethod) || string.IsNullOrWhiteSpace(callerService))
         {
             throw new InvalidOperationException("Не переданы обязательные параметры для создания запроса");
         }
@@ -104,10 +82,17 @@ public static class BaseRequestExtension
             Date = DateTime.UtcNow.ToTimestamp(),
             TargetServiceName = targetService,
             TargetServiceMethod = targetServiceMethod,
-            CallerServiceName = callerMethod,
+            CallerServiceName = callerService,
             RequestBody = new Struct()
         };
 
         return request;
+    }
+
+    public static async Task<BaseResponse> SendRequestToGateway(BaseRequest request)
+    {
+        var gatewaySetting = await SettingsBaseService.GetGrpcServiceChannelByName(ServicesConst.ApiGateway);
+        var client = new BaseRequestService.BaseRequestServiceClient(gatewaySetting);
+        return await client.SendRequestAsync(request);
     }
 }
