@@ -1,3 +1,4 @@
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using Google.Protobuf.WellKnownTypes;
 using static Marketplace.BaseLibrary.Utils.Base.Logger.Logger;
@@ -31,7 +32,10 @@ public static class BaseGrpcStructExtension
         //Пробуем сериализовать объект
         try
         {
-            serializedObject = JsonSerializer.Serialize(obj);
+            serializedObject = JsonSerializer.Serialize(obj, new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            });
         }
         
         //В случае ошибки - выходим

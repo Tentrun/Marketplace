@@ -34,7 +34,6 @@ app.Lifetime.ApplicationStarted.Register(() =>
     HealthCheckService.ApplicationAddress =
         serverAddressesFeature.Addresses.FirstOrDefault(x => x.Contains("http"));
 });
-
 //Применение авто миграций, если существуют новые добавленные
 app.Services.ApplyMigrations<ApplicationDbContext>();
 

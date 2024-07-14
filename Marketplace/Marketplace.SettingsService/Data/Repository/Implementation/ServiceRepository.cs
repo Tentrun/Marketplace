@@ -20,10 +20,9 @@ internal class ServiceRepository(IDbContextFactory<ApplicationDbContext> dbConte
         {
             DateTime currentTime = DateTime.UtcNow;
             var result = await _context.ServiceSettings
-                //Так же легче высчитать на серваке по дате, ибо выборка по времени очень грузит БД
-                .Where(x => x.ServiceStatusEnum != ServiceStatusEnum.Offline)
+                .Where(x => x.ServiceStatusEnum != ServiceStatusEnum.Offline && x.UpdateDate.AddMinutes(3) < currentTime)
                 .ToListAsync();
-            return result.Where(x => x.UpdateDate.AddMinutes(3) < currentTime).ToList();
+            return result.ToList();
         }
         catch (Exception e)
         {

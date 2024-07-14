@@ -1,7 +1,7 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 </style>
-<div class="d-flex flex-column align-items-center">
+<div *ngIf="productsOfTheDay && productsOfTheDay.length > 0" class="d-flex flex-column align-items-center">
   <h1 style="font-family: 'Open Sans', sans-serif; font-optical-sizing: auto; font-weight: 300">
     Товары дня
   </h1>
@@ -18,12 +18,12 @@
       <tui-carousel
         style="max-width: 60vh; max-height: 40vh"
         [draggable]="true"
-        [(index)]="index"
+        [(index)]="carouselIndex"
         [duration]="5000"
-      ><ng-container *ngFor="let item of items">
+      ><ng-container *ngFor="let item of productsOfTheDay">
         <tui-island [hoverable]="true" style="display: flex; flex-direction: column; flex-wrap: wrap; align-content: space-around; align-items: center; text-align: center" *tuiItem>
           <h4 style="font-family: 'Open Sans', sans-serif; font-optical-sizing: auto; font-weight: 300">
-            {{item}}
+            {{item.name}}
           </h4>
           <img draggable="false" style="cursor:pointer; border-radius: 10px" ngSrc="assets/images/avatar.jpg" alt="" height="200" width="450" [priority]="true"/>
           <a

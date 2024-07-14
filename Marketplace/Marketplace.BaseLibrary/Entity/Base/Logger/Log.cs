@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using Marketplace.BaseLibrary.Enum.Base;
 using Marketplace.BaseLibrary.Utils.Base.Logger.Extension;
 
@@ -27,11 +29,14 @@ public class Log
         Time = DateTime.UtcNow;
         try
         {
-            LogValue = System.Text.Json.JsonSerializer.Serialize(logValue);
+            LogValue = JsonSerializer.Serialize(logValue, new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            });
         }
-        catch (System.Exception e)
+        catch (System.Exception)
         {
-            LogValue = logValue.ToString();
+            LogValue = logValue.ToString()!;
         }
     }
 

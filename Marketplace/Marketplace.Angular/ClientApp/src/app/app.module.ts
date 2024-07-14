@@ -18,7 +18,6 @@ import {RouterModule} from '@angular/router';
 
 import {AppComponent} from './app.component';
 import {NavMenuComponent} from './nav-menu/nav-menu.component';
-import {HomeComponent} from './home/home.component';
 import {CounterComponent} from './counter/counter.component';
 import {FetchDataComponent} from './fetch-data/fetch-data.component';
 import {TuiBarModule} from "@taiga-ui/addon-charts";
@@ -27,12 +26,12 @@ import {TuiCarouselModule, TuiIslandModule, TuiPaginationModule, TuiTabsModule} 
 import {TuiAppBarModule} from "@taiga-ui/addon-mobile";
 import {NgOptimizedImage} from "@angular/common";
 import {ServicesStatusComponent} from "./pages/services-status/services-status.component";
+import {HomeComponent} from "./pages/home/home.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent,
     CounterComponent,
     FetchDataComponent
   ],
@@ -62,7 +61,8 @@ import {ServicesStatusComponent} from "./pages/services-status/services-status.c
     TuiLinkModule,
     TuiModeModule,
     TuiIslandModule,
-    TuiPaginationModule
+    TuiPaginationModule,
+    HomeComponent
   ],
   providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}, provideHttpClient()],
   bootstrap: [AppComponent]
