@@ -1,5 +1,5 @@
 using Marketplace.BaseLibrary.Entity.Base.Logger;
-using Marketplace.BaseLibrary.Interfaces.Base;
+using Marketplace.BaseLibrary.Implementation;
 using Marketplace.LoggerService.Data.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 

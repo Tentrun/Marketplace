@@ -1,19 +1,28 @@
 using Google.Protobuf.WellKnownTypes;
+using Marketplace.BaseLibrary.Implementation;
 using Marketplace.BaseLibrary.Interfaces.Base.Repository;
-using Marketplace.ProductService.Data.Repository.Implementation;
+using Marketplace.BaseLibrary.Utils.Base.Extension;
+using Marketplace.ProductService.Data.Repository.Interface;
 using Marketplace.ProductService.Infrastructure.Interfaces;
 
 namespace Marketplace.ProductService.Infrastructure.Services;
 
-public class ProductsService(IUnitOfWork unitOfWork) : IProductsService
+public class ProductsService : BaseService, IProductsService
 {
+    public ProductsService(IUnitOfWork unitOfWork) : base(unitOfWork)
+    {
+    }
+    
     /// <summary>
     /// Получение продуктов дня
     /// </summary>
-    public Struct GetProductsOfTheDay()
+    public async Task GetProductsOfTheDay()
     {
-        var repository = unitOfWork.GetRepository<ProductsRepository>();
+        var productsRepository = UnitOfWork.GetRepository<IProductsRepository>();
+        var products = await productsRepository.GetAllProductsOfTheDay();
 
-        return new Struct();
+        var response = new Struct();
+        response.AddFieldToGrpcStruct("response", products);
+        ServiceResponse = response;
     }
 }

@@ -1,8 +1,8 @@
-using Google.Protobuf.WellKnownTypes;
+using Marketplace.BaseLibrary.Interfaces.Base.Service;
 
 namespace Marketplace.ProductService.Infrastructure.Interfaces;
 
-public interface IProductsService
+public interface IProductsService : IBaseService
 {
-    public Struct GetProductsOfTheDay();
+    public Task GetProductsOfTheDay();
 }

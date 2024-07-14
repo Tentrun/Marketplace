@@ -1,7 +1,7 @@
 using Marketplace.BaseLibrary.Const;
 using Marketplace.BaseLibrary.Entity.Base.ServiceSettings;
 using Marketplace.BaseLibrary.Enum.Base;
-using Marketplace.BaseLibrary.Interfaces.Base;
+using Marketplace.BaseLibrary.Implementation;
 using Marketplace.BaseLibrary.Utils.Base.Logger;
 using Marketplace.SettingsService.Data.Repository.Interface;
 using Microsoft.EntityFrameworkCore;

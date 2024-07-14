@@ -19,6 +19,6 @@ public static class BaseInfrastructureDi
             opt.UseNpgsql(configuration.GetConnectionString(connectionStringName));
             opt.EnableThreadSafetyChecks();
         });
-        services.AddUnitOfWork<T>();
+        services.AddUnitOfWork();
     }
 }

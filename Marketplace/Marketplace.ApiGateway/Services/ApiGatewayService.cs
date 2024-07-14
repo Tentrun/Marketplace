@@ -1,6 +1,6 @@
 using Grpc.Core;
 using Marketplace.BaseLibrary;
-using Marketplace.BaseLibrary.Utils.Base;
+using Marketplace.BaseLibrary.Utils.Base.Extension;
 using Marketplace.BaseLibrary.Utils.Base.Settings;
 
 namespace Marketplace.ApiGateway.Services;

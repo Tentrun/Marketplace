@@ -7,6 +7,8 @@ using Marketplace.ProductService.Data;
 using Marketplace.ProductService.Data.Repository.Implementation;
 using Marketplace.ProductService.Data.Repository.Interface;
 using Marketplace.ProductService.GrpcServices;
+using Marketplace.ProductService.Infrastructure.Interfaces;
+using Marketplace.ProductService.Infrastructure.Services;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 
@@ -17,6 +19,7 @@ builder.Services.AddGrpc();
 builder.Services.AddBaseServicesToDi<ApplicationDbContext>(builder.Configuration, "ProductsPsSql");
 builder.Services.AddDatabaseHealthReporter(ServicesConst.ProductService, "Сервис продуктов");
 builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
+builder.Services.AddScoped<IProductsService, ProductsService>();
 
 var app = builder.Build();
 
