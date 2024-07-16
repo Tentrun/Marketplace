@@ -1,0 +1,28 @@
+﻿syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Marketplace.BaseLibrary";
+
+package user;
+
+// The request message containing the user's name.
+message UserGrpc {
+  UserRole userRole = 1;
+  google.protobuf.Timestamp createdTime = 2;
+  google.protobuf.Timestamp updatedTime = 3;
+  string Name = 4;
+  string Patronimic = 5;
+  string Surname = 6;
+  string Phone = 7;
+  bool PhoneConfirmed = 8;
+  string Email = 9;
+  bool EmailConfirmed = 10;
+  string UserAlias = 11;
+  string Password = 12;
+  string PasswordHash = 13;
+}
+
+enum UserRole{
+  Client = 0;
+  Admin = 1;
+}

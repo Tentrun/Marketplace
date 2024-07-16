@@ -1,0 +1,29 @@
+﻿syntax = "proto3";
+import "Proto/user.proto";
+
+option csharp_namespace = "Marketplace.BaseLibrary";
+
+package authentication;
+
+// The greeting service definition.
+service AuthenticationGrpcService {
+  // Sends a greeting
+  rpc Login (AuthenticationRequest) returns (AuthenticationReply);
+  rpc GetUser(AuthenticationRequest) returns (user.UserGrpc);
+}
+
+// The request message containing the user's name.
+message AuthenticationRequest {
+  string Phone = 1;
+  bool PhoneConfirmed = 2;
+  string Email = 3;
+  bool EmailConfirmed = 4;
+  string UserAlias = 5;
+  string Password = 6;
+  string PasswordHash = 7;
+}
+
+// The response message containing the greetings.
+message AuthenticationReply {
+  user.UserGrpc user = 1;
+}

@@ -1,0 +1,22 @@
+﻿syntax = "proto3";
+import "Proto/user.proto";
+
+option csharp_namespace = "Marketplace.BaseLibrary";
+
+package registration;
+
+// The greeting service definition.
+service RegistrationGrpcService {
+  // Sends a greeting
+  rpc CreateUser (UserRequest) returns (UserReply);
+}
+
+// The request message containing the user's name.
+message UserRequest {
+  user.UserGrpc user = 1;
+}
+
+// The response message containing the greetings.
+message UserReply {
+  bool writeLogResult = 1;
+}

@@ -13,6 +13,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.6" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.6" />
@@ -28,19 +29,15 @@
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Dto\" />
-      <Folder Include="Entity\Base\" />
+      <Reference Include="Microsoft.AspNetCore">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.6\Microsoft.AspNetCore.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.AspNetCore.Hosting.Server.Abstractions">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.6\Microsoft.AspNetCore.Hosting.Server.Abstractions.dll</HintPath>
+      </Reference>
     </ItemGroup>
     <ItemGroup>
-      <Protobuf Include="Utils\Logger\Proto\logger.proto">
-          <GrpcServices>Both</GrpcServices>
-          <Access>Public</Access>
-          <ProtoCompile>True</ProtoCompile>
-          <CompileOutputs>True</CompileOutputs>
-          <OutputDir>obj\Debug\net8.0\</OutputDir>
-          <Generator>MSBuild:Compile</Generator>
-      </Protobuf>
-      <Protobuf Include="Utils\Logger\Proto\settings.proto">
+      <Protobuf Include="Proto\authorization.proto">
         <GrpcServices>Both</GrpcServices>
         <Access>Public</Access>
         <ProtoCompile>True</ProtoCompile>
@@ -48,14 +45,46 @@
         <OutputDir>obj\Debug\net8.0\</OutputDir>
         <Generator>MSBuild:Compile</Generator>
       </Protobuf>
-    </ItemGroup>
-    <ItemGroup>
-      <Reference Include="Microsoft.AspNetCore">
-        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.6\Microsoft.AspNetCore.dll</HintPath>
-      </Reference>
-      <Reference Include="Microsoft.AspNetCore.Hosting.Server.Abstractions">
-        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.6\Microsoft.AspNetCore.Hosting.Server.Abstractions.dll</HintPath>
-      </Reference>
+      <Protobuf Include="Proto\logger.proto">
+        <GrpcServices>Both</GrpcServices>
+        <Access>Public</Access>
+        <ProtoCompile>True</ProtoCompile>
+        <CompileOutputs>True</CompileOutputs>
+        <OutputDir>obj\Debug\net8.0\</OutputDir>
+        <Generator>MSBuild:Compile</Generator>
+      </Protobuf>
+      <Protobuf Include="Proto\registration.proto">
+        <GrpcServices>Both</GrpcServices>
+        <Access>Public</Access>
+        <ProtoCompile>True</ProtoCompile>
+        <CompileOutputs>True</CompileOutputs>
+        <OutputDir>obj\Debug\net8.0\</OutputDir>
+        <Generator>MSBuild:Compile</Generator>
+      </Protobuf>
+      <Protobuf Include="Proto\settings.proto">
+        <GrpcServices>Both</GrpcServices>
+        <Access>Public</Access>
+        <ProtoCompile>True</ProtoCompile>
+        <CompileOutputs>True</CompileOutputs>
+        <OutputDir>obj\Debug\net8.0\</OutputDir>
+        <Generator>MSBuild:Compile</Generator>
+      </Protobuf>
+      <Protobuf Include="Proto\user.proto">
+        <GrpcServices>Both</GrpcServices>
+        <Access>Public</Access>
+        <ProtoCompile>True</ProtoCompile>
+        <CompileOutputs>True</CompileOutputs>
+        <OutputDir>obj\Debug\net8.0\</OutputDir>
+        <Generator>MSBuild:Compile</Generator>
+      </Protobuf>
+      <Protobuf Include="Proto\authentication.proto">
+        <GrpcServices>Both</GrpcServices>
+        <Access>Public</Access>
+        <ProtoCompile>True</ProtoCompile>
+        <CompileOutputs>True</CompileOutputs>
+        <OutputDir>obj\Debug\net8.0\</OutputDir>
+        <Generator>MSBuild:Compile</Generator>
+      </Protobuf>
     </ItemGroup>
 
 </Project>
