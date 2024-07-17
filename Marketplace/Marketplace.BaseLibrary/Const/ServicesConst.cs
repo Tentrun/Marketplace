@@ -18,12 +18,12 @@ public static class ServicesConst
     public const string ProductService = "ProductService";
     
     /// <summary>
-    /// Имя сервиса WebpApi в БД
-    /// </summary>
-    public const string WebApi = "WebApi";
-    
-    /// <summary>
     /// Имя сервиса Gateway в БД
     /// </summary>
     public const string ApiGateway = "ApiGateway";
+    
+    /// <summary>
+    /// Имя сервиса Identity в БД
+    /// </summary>
+    public const string Identity = "Identity";
 }
