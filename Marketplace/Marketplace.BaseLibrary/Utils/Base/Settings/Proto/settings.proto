@@ -1,0 +1,57 @@
+syntax = "proto3";
+import "google/protobuf/wrappers.proto";
+
+option csharp_namespace = "Marketplace.BaseLibrary";
+
+package settings;
+
+service SettingsGrpcService {
+  //Send health status from service
+  rpc SendHealthReport (HealthReportRequest) returns (HealthReportResponse);
+  rpc GetServiceSettings (ServiceSettingsRequest) returns (ServiceSettingsResponse);
+  rpc GetInstancesStatuses (GetInstancesStatusesRequest) returns (GetInstancesStatusesResponse);
+}
+
+message HealthReportRequest {
+  string serviceName = 1;
+  string ip = 2;
+  int32 port = 3;
+  ServiceStatus serviceStatus = 4;
+  google.protobuf.StringValue description = 5;
+}
+
+message HealthReportResponse {
+  bool updated = 1;
+}
+
+enum ServiceStatus{
+  Available = 0;
+  Busy = 1;
+  Offline = 2;
+}
+
+message ServiceSettingsRequest{
+  string serviceName = 1;
+}
+
+message ServiceSettingsResponse{
+  google.protobuf.StringValue ip = 1;
+  google.protobuf.Int32Value port = 2;
+}
+
+//Запрос связанный с получением инстансов для вебки
+message GetInstancesStatusesRequest{
+  
+}
+
+message GetInstancesStatusesResponse{
+  repeated ServiceInstance ServiceInstances = 1;
+}
+
+message ServiceInstance{
+  string serviceName = 1;
+  string ip = 2;
+  int32 port = 3;
+  ServiceStatus serviceStatus = 4;
+  google.protobuf.StringValue description = 5;
+}

@@ -1,27 +1,22 @@
 using Marketplace.BaseLibrary.Const;
+using Marketplace.BaseLibrary.Di;
 using Marketplace.BaseLibrary.Utils;
-using Marketplace.BaseLibrary.Utils.HealthCheckWorker;
-using Marketplace.BaseLibrary.Utils.HealthCheckWorker.DI;
-using Marketplace.BaseLibrary.Utils.UnitOfWork.DI;
+using Marketplace.BaseLibrary.Utils.Base.Settings.HealthCheckWorker;
+using Marketplace.BaseLibrary.Utils.Base.Settings.HealthCheckWorker.DI;
 using Marketplace.LoggerService.Data;
 using Marketplace.LoggerService.Data.Repository.Implementation;
 using Marketplace.LoggerService.Data.Repository.Interface;
 using Marketplace.LoggerService.Services;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
-builder.Services.AddDbContext<ApplicationDbContext>(opt =>
-{
-    opt.UseNpgsql(builder.Configuration.GetConnectionString("LoggerPsSql"));
-});
-builder.Services.AddScoped<ILogRepository, LogRepository>();
-builder.Services.AddUnitOfWork<ApplicationDbContext>();
+builder.Services.AddBaseServicesToDi<ApplicationDbContext>(builder.Configuration, "LoggerPsSql");
 builder.Services.AddDatabaseHealthReporter(ServicesConst.LoggerService, "Сервис логгера");
+builder.Services.AddScoped<ILogRepository, LogRepository>();
 
 var app = builder.Build();
 

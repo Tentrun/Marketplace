@@ -13,17 +13,17 @@ public static class ServicesConst
     public const string LoggerService = "LoggerService";
     
     /// <summary>
-    /// Имя сервиса авторизации
+    /// Имя сервиса продуктов в БД
     /// </summary>
-    public const string AuthorizationService = "AuthorizationService";
+    public const string ProductService = "ProductService";
     
     /// <summary>
-    /// Имя сервиса аунтефикации
+    /// Имя сервиса WebpApi в БД
     /// </summary>
-    public const string AuthenticationService = "AuthenticationService";
+    public const string WebApi = "WebApi";
     
     /// <summary>
-    /// Имя сервиса регистрации
+    /// Имя сервиса Gateway в БД
     /// </summary>
-    public const string RegistrationService = "RegistrationService";
+    public const string ApiGateway = "ApiGateway";
 }

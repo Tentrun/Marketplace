@@ -44,7 +44,7 @@ public class ServiceSetting
     /// Описание сервиса
     /// А нужно ли оно?
     /// </summary>
-    public string? Description { get; init; }
+    public string? Description { get; set; }
     
     /// <summary>
     /// Дата и время создания инстанса

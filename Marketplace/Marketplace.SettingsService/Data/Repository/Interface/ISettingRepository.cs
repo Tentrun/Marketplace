@@ -7,4 +7,5 @@ public interface ISettingRepository : IBaseRepository<ServiceSetting>
 {
     public Task<ServiceSetting?> GetServiceSettingByNameAsync(string serviceName);
     public Task<bool> UpdateServiceInfoFromHealthReport(ServiceSetting serviceSetting);
+    public Task<List<ServiceSetting>> GetAllInstances();
 }

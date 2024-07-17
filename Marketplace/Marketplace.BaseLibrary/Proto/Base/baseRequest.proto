@@ -1,0 +1,27 @@
+syntax = "proto3";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Marketplace.BaseLibrary";
+
+package baseServicePackage;
+
+service BaseRequestService {
+  rpc SendRequest (BaseRequest) returns (BaseResponse);
+}
+
+message BaseRequest {
+  string id = 1;
+  google.protobuf.Timestamp date = 2;
+  string targetServiceName = 3;
+  string targetServiceMethod = 4;
+  string callerServiceName = 5;
+  google.protobuf.Struct requestBody = 6;
+}
+
+message BaseResponse {
+  string id = 1;
+  google.protobuf.Timestamp date = 2;
+  google.protobuf.Struct responseBody = 3;
+  google.protobuf.Struct errorBody = 4;
+}

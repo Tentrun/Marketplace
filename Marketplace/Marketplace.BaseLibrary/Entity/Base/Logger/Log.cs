@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using Marketplace.BaseLibrary.Enum.Base;
-using Marketplace.BaseLibrary.Utils.Logger.Extension;
+using Marketplace.BaseLibrary.Utils.Base.Logger.Extension;
 
 namespace Marketplace.BaseLibrary.Entity.Base.Logger;
 
@@ -23,9 +25,19 @@ public class Log
     {
         CallingClass = callingClass.FormatCallingMethod();
         CallingMethod = callingMethod;
-        LogValue = System.Text.Json.JsonSerializer.Serialize(logValue);
         LogType = logType;
         Time = DateTime.UtcNow;
+        try
+        {
+            LogValue = JsonSerializer.Serialize(logValue, new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            });
+        }
+        catch (System.Exception)
+        {
+            LogValue = logValue.ToString()!;
+        }
     }
 
     public Log(LogRequest request)

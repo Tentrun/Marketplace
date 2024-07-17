@@ -15,4 +15,9 @@ public class ApplicationDbContext : DbContext
     /// ДбСет продуктов
     /// </summary>
     public DbSet<Product> Products { get; set; }
+    
+    /// <summary>
+    /// ДбСет продуктов дня
+    /// </summary>
+    public DbSet<Product> ProductsOfTheDay { get; set; }
 }

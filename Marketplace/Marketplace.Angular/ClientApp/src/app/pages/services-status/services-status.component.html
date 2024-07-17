@@ -1,0 +1,39 @@
+<tui-loader [hidden]="!isLoading" [showLoader]="isLoading">
+  <div [hidden]="!isLoading"  class="mt-5 text-center">Загрузка....</div>
+</tui-loader>
+<table class="tui-table mt-3" *ngIf="instances.length > 0 && !isLoading">
+  <tbody>
+  <tr class="tui-table__tr tui-table__tr_border_none">
+    <th class="tui-table__th">Наименование сервиса</th>
+    <th class="tui-table__th">Описание</th>
+    <th class="tui-table__th">Статус</th>
+    <th class="tui-table__th">Хост</th>
+    <th class="tui-table__th tui-table__th_last">Порт</th>
+  </tr>
+  <tr class="tui-table__tr tui-table__tr_border_none"  *ngFor="let instance of instances">
+    <td class="tui-table__td">{{ instance.name }}</td>
+    <td class="tui-table__td">{{ instance.description }}</td>
+    <td class="{{ instance.serviceStatus | serviceStatusPipe: 'style' }} tui-table__td">{{ instance.serviceStatus | serviceStatusPipe: ''}}</td>
+    <td class="tui-table__td">{{ instance.host }}</td>
+    <td class="tui-table__td tui-table__td_last">{{ instance.port }}</td>
+  </tr>
+  </tbody>
+</table>
+
+<div *ngIf="isError && !isLoading; then error_content">
+
+</div>
+<ng-template #error_content>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+  </style>
+  <div class="text-center mt-5">
+    <h1>😿</h1>
+    <div style="font-family: 'Open Sans', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300">
+      <h2>Нам очень жаль, но, кажется где-то возникла ошибка...</h2>
+      <h4>Возможно Вам стоит связаться с нами и мы решим проблему вместе!</h4>
+    </div>
+  </div>
+</ng-template>
