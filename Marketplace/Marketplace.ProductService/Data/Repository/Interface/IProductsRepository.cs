@@ -8,5 +8,5 @@ public interface IProductsRepository : IBaseRepository<Product>
     /// <summary>
     /// Возвращает все продукты дня
     /// </summary>
-    public Task<List<Product>> GetAllProductsOfTheDay();
+    public Task<List<ProductOfTheDay>> GetAllProductsOfTheDay();
 }

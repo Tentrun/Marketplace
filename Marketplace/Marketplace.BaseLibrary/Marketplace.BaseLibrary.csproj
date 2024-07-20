@@ -30,9 +30,6 @@
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Entity\Base\" />
-    </ItemGroup>
-    <ItemGroup>
       <Protobuf Include="Proto\Base\baseRequest.proto">
         <GrpcServices>Both</GrpcServices>
         <Access>Public</Access>
