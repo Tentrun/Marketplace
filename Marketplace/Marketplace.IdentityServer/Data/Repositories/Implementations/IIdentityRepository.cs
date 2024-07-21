@@ -10,6 +10,12 @@ public interface IIdentityRepository
     /// </summary>
     /// <param name="phone">Номер телефона пользователя</param>
     public Task<IdentityUserModel?> GetUserByPhone(string phone);
+
+    /// <summary>
+    /// Получает пользователя по его ИД
+    /// </summary>
+    /// <param name="id">ИД пользователя</param>
+    public Task<IdentityUserModel?> GetUserById(long id);
     
     /// <summary>
     /// Получается пользователя по привязанному адресу электронной почты
@@ -30,6 +36,12 @@ public interface IIdentityRepository
     /// <param name="refreshToken"></param>
     public Task<bool> AddRefreshToken(RefreshToken refreshToken);
 
+    /// <summary>
+    /// Получает сущность токена из БД по его значению
+    /// </summary>
+    /// <param name="tokenValue">Значение токена</param>
+    public Task<RefreshToken?> GetRefreshToken(string tokenValue);
+    
     /// <summary>
     /// Обновляет рефреш токен после его использования
     /// </summary>

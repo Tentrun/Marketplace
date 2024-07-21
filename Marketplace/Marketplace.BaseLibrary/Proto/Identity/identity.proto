@@ -1,0 +1,36 @@
+syntax = "proto3";
+import "google/protobuf/wrappers.proto";
+
+option csharp_namespace = "Marketplace.BaseLibrary";
+
+package identityPackage;
+
+service IdentityGrpcService {
+  rpc AuthUser (AuthRequest) returns (RefreshTokenResponse);
+  rpc RefreshToken (RefreshTokenRequest) returns (RefreshTokenResponse);
+  rpc RegisterUser (RegisterRequest) returns (RefreshTokenResponse);
+}
+
+message RegisterRequest{
+  string name = 1;
+  string secondName = 2;
+  string patronymic = 3;
+  string email = 4;
+  string phone = 5;
+  string password = 6;
+}
+
+message AuthRequest {
+  string login = 1;
+  string password = 2;
+}
+
+message RefreshTokenRequest {
+  string refreshToken = 1;
+}
+
+message RefreshTokenResponse {
+  google.protobuf.StringValue refreshToken = 1;
+  google.protobuf.StringValue accessToken = 2;
+  google.protobuf.StringValue error = 3;
+}

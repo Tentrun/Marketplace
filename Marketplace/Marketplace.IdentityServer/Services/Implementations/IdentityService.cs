@@ -65,6 +65,48 @@ public class IdentityService : IIdentityService
         };
     }
 
+    public async Task<TokensPack> RefreshTokens(string refreshToken)
+    {
+        IIdentityRepository repository = _unitOfWork.GetRepository<IIdentityRepository>();
+        
+        //Ищем существующий токен
+        var token = await repository.GetRefreshToken(refreshToken);
+
+        //Если пуст - выходим
+        if (token == null)
+        {
+            throw new NullReferenceException("Подходящий токен не найден");
+        }
+
+        //Ищем пользователя из токена, если пусто - выходим
+        var user = await repository.GetUserById(token.UserId);
+        if (user == null)
+        {
+            throw new NullReferenceException("Пользователь из токена не найден");
+        }
+        
+        //Получаем роли пользователя для клеймсов
+        var userRoles = await GetUserRoles(user);
+
+        var claims = new Dictionary<string, object>();
+        userRoles?.ForEach(x => claims.Add(ClaimTypes.Role, x));
+        claims.Add("UserId", user.Id);
+        
+        //Обновляем токен и сохраняем
+        var updatedRefreshToken = GenerateRefreshToken(token.UserId);
+        updatedRefreshToken.Id = token.Id;
+        
+        var result = new TokensPack
+        {
+            AccessToken = GenerateAccessToken(claims),
+            RefreshToken = updatedRefreshToken.Token
+        };
+
+        await repository.UpdateRefreshToken(updatedRefreshToken);
+
+        return result;
+    }
+
     private string GenerateAccessToken(Dictionary<string, object> claims)
     {
         JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();

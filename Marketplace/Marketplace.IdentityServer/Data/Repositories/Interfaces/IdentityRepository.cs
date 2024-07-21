@@ -20,6 +20,11 @@ public class IdentityRepository : IIdentityRepository
         return await _context.Users.AsNoTrackingWithIdentityResolution().FirstOrDefaultAsync(x => x.PhoneNumber == phone);
     }
 
+    public async Task<IdentityUserModel?> GetUserById(long id)
+    {
+        return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+    }
+
     public async Task<IdentityUserModel?> GetUserByEmail(string email)
     {
         return await _context.Users.AsNoTrackingWithIdentityResolution().FirstOrDefaultAsync(x => x.Email == email);
@@ -50,6 +55,11 @@ public class IdentityRepository : IIdentityRepository
         await _context.SaveChangesAsync();
 
         return true;
+    }
+
+    public async Task<RefreshToken?> GetRefreshToken(string tokenValue)
+    {
+        return await _context.RefreshTokens.FirstOrDefaultAsync(x => x.Token == tokenValue);
     }
 
     public async Task<bool> UpdateRefreshToken(RefreshToken refreshToken)

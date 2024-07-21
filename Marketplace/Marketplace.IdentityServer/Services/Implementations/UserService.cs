@@ -78,14 +78,14 @@ public class UserService : IUserService
         var result = await _userManager.CreateAsync(userModel, requestRegisterUserDto.Password);
 
         if (!result.Succeeded) 
-            return false;
+            throw new InvalidOperationException(result.Errors.FirstOrDefault()?.Description ?? "Неизвестная ошибка регистрации пользователя");
         
         //Получаем юзера из БД
         IdentityUserModel? user = await GetUser(requestRegisterUserDto.Email) ?? await GetUser(requestRegisterUserDto.Phone);
 
         if (user == null)
         {
-            return false;
+            throw new NullReferenceException("Не удалось найти пользователя после создания в базе данных");
         }
 
         //Добавляем его к стандартной роли

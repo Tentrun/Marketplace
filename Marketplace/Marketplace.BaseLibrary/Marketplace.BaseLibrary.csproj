@@ -39,6 +39,14 @@
         <OutputDir>obj\Debug\net8.0\</OutputDir>
         <Generator>MSBuild:Compile</Generator>
       </Protobuf>
+      <Protobuf Include="Proto\Identity\identity.proto">
+        <GrpcServices>Both</GrpcServices>
+        <Access>Public</Access>
+        <ProtoCompile>True</ProtoCompile>
+        <CompileOutputs>True</CompileOutputs>
+        <OutputDir>obj\Debug\net8.0\</OutputDir>
+        <Generator>MSBuild:Compile</Generator>
+      </Protobuf>
       <Protobuf Include="Utils\Base\Logger\Proto\logger.proto">
         <Generator>MSBuild:Compile</Generator>
       </Protobuf>

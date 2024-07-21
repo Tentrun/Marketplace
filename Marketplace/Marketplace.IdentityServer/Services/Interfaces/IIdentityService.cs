@@ -18,6 +18,12 @@ public interface IIdentityService
     public Task<TokensPack> AuthorizeUser(IdentityUserModel? user);
 
     /// <summary>
+    /// Обновление связки токенов по рефреш токену
+    /// </summary>
+    /// <param name="refreshToken">Рефреш токен юзера</param>
+    public Task<TokensPack> RefreshTokens(string refreshToken);
+    
+    /// <summary>
     /// Получение ролей пользователя
     /// </summary>
     /// <param name="user">Пользователь из базы данных</param>
