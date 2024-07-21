@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Marketplace.Identity.Migrations
 {
     [DbContext(typeof(ApplicationIdentityDbContext))]
-    [Migration("20240717214357_Initial")]
+    [Migration("20240721093005_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -109,6 +109,33 @@ namespace Marketplace.Identity.Migrations
                     b.ToTable("Users", "public");
                 });
 
+            modelBuilder.Entity("Marketplace.JwtExtension.Models.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("ExpiryOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<long>", b =>
                 {
                     b.Property<long>("Id")
@@ -141,21 +168,21 @@ namespace Marketplace.Identity.Migrations
                         new
                         {
                             Id = 1L,
-                            ConcurrencyStamp = "8e4e859e-b390-4239-9d20-2c0a91f565f5",
+                            ConcurrencyStamp = "bf7415f6-4207-4ff7-8561-c345eaa95e18",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = 2L,
-                            ConcurrencyStamp = "0a11c901-fac6-42b9-abab-39eb74ae685f",
+                            ConcurrencyStamp = "87351795-feb8-43c9-b6d6-3b1a71d7f72c",
                             Name = "Seller",
                             NormalizedName = "SELLER"
                         },
                         new
                         {
                             Id = 3L,
-                            ConcurrencyStamp = "654a9909-833c-4ef7-9231-5f5d7e00f7fc",
+                            ConcurrencyStamp = "ce144f3f-8e09-4ea1-9ceb-b22fcf76daa5",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });

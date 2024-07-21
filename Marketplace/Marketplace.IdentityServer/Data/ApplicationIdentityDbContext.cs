@@ -1,4 +1,5 @@
 using Marketplace.BaseLibrary.Entity.Identity;
+using Marketplace.JwtExtension.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,11 @@ namespace Marketplace.Identity.Data;
 public class ApplicationIdentityDbContext : IdentityDbContext<IdentityUserModel, IdentityRole<long>, long>
 {
     private readonly IConfiguration _configuration;
+    
+    /// <summary>
+    /// ДбСет рефреш токенов
+    /// </summary>
+    public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
 
     public ApplicationIdentityDbContext(DbContextOptions<ApplicationIdentityDbContext> options, IConfiguration configuration) : base(options)
     {

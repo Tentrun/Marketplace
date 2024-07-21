@@ -12,6 +12,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="8.0.6" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     </ItemGroup>
 
     <ItemGroup>
@@ -30,6 +31,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Marketplace.BaseLibrary\Marketplace.BaseLibrary.csproj" />
+      <ProjectReference Include="..\Marketplace.JwtExtension\Marketplace.JwtExtension.csproj" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

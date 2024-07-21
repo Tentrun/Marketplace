@@ -1,5 +1,6 @@
 using Marketplace.BaseLibrary.Entity.Identity;
 using Marketplace.Identity.Data.Repositories.Implementations;
+using Marketplace.JwtExtension.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,6 +39,44 @@ public class IdentityRepository : IIdentityRepository
             UserId = user.Id,
             RoleId = existedRole.Id
         });
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
+    public async Task<bool> AddRefreshToken(RefreshToken refreshToken)
+    {
+        await _context.RefreshTokens.AddAsync(refreshToken);
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
+    public async Task<bool> UpdateRefreshToken(RefreshToken refreshToken)
+    {
+        var currentToken = await _context.RefreshTokens.FirstOrDefaultAsync(x => x.Id == refreshToken.Id);
+        if (currentToken == null)
+        {
+            return false;
+        }
+
+        currentToken = refreshToken;
+        _context.RefreshTokens.Entry(currentToken).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
+    public async Task<bool> RevokeRefreshToken(Guid tokenId)
+    {
+        var currentToken = await _context.RefreshTokens.FirstOrDefaultAsync(x => x.Id == tokenId);
+        if (currentToken == null)
+        {
+            return false;
+        }
+
+        currentToken.IsRevoked = true;
+        _context.RefreshTokens.Entry(currentToken).State = EntityState.Modified;
         await _context.SaveChangesAsync();
 
         return true;

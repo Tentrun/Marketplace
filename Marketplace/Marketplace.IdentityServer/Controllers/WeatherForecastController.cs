@@ -1,5 +1,6 @@
 using Marketplace.BaseLibrary.Dto.Identity;
-using Marketplace.Identity.Services.Implementations;
+using Marketplace.Identity.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Identity.Controllers;
@@ -32,8 +33,20 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("Test2")]
     public async Task<IActionResult> Test2(string data, string pass)
     {
-        var result = await _identityService.AuthenticateUser(data,pass);
-
+        var user = await _userService.GetUser(data);
+        var isValid = await _identityService.AuthenticateUser(user, pass);
+        if (!isValid)
+        {
+            return Unauthorized("Данные не валид");
+        }
+        var result = await _identityService.AuthorizeUser(user);
         return Ok(result);
+    }
+
+    [Authorize]
+    [HttpGet("Test3")]
+    public async Task<IActionResult> Test3()
+    {
+        return Ok("work");
     }
 }

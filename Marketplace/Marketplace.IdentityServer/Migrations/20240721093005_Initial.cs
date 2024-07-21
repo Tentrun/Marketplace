@@ -18,6 +18,22 @@ namespace Marketplace.Identity.Migrations
                 name: "public");
 
             migrationBuilder.CreateTable(
+                name: "RefreshTokens",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Token = table.Column<string>(type: "text", nullable: false),
+                    ExpiryOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    IsRevoked = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 schema: "public",
                 columns: table => new
@@ -187,9 +203,9 @@ namespace Marketplace.Identity.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1L, "8e4e859e-b390-4239-9d20-2c0a91f565f5", "User", "USER" },
-                    { 2L, "0a11c901-fac6-42b9-abab-39eb74ae685f", "Seller", "SELLER" },
-                    { 3L, "654a9909-833c-4ef7-9231-5f5d7e00f7fc", "Administrator", "ADMINISTRATOR" }
+                    { 1L, "bf7415f6-4207-4ff7-8561-c345eaa95e18", "User", "USER" },
+                    { 2L, "87351795-feb8-43c9-b6d6-3b1a71d7f72c", "Seller", "SELLER" },
+                    { 3L, "ce144f3f-8e09-4ea1-9ceb-b22fcf76daa5", "Administrator", "ADMINISTRATOR" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -240,6 +256,9 @@ namespace Marketplace.Identity.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "RefreshTokens");
+
             migrationBuilder.DropTable(
                 name: "RoleClaims",
                 schema: "public");

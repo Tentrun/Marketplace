@@ -1,7 +1,7 @@
 using Marketplace.BaseLibrary.Dto.Identity;
 using Marketplace.BaseLibrary.Entity.Identity;
 
-namespace Marketplace.Identity.Services.Implementations;
+namespace Marketplace.Identity.Services.Interfaces;
 
 public interface IUserService
 {

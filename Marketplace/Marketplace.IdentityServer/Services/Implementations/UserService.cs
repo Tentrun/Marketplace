@@ -4,10 +4,10 @@ using Marketplace.BaseLibrary.Entity.Identity;
 using Marketplace.BaseLibrary.Interfaces.Base.Repository;
 using Marketplace.Identity.Data;
 using Marketplace.Identity.Data.Repositories.Implementations;
-using Marketplace.Identity.Services.Implementations;
+using Marketplace.Identity.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
-namespace Marketplace.Identity.Services.Interfaces;
+namespace Marketplace.Identity.Services.Implementations;
 
 public class UserService : IUserService
 {
