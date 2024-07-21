@@ -4,8 +4,14 @@ using Microsoft.Extensions.Hosting;
 
 namespace Marketplace.BaseLibrary.Utils.Base.Logger.BackgroundWorker;
 
+/// <summary>
+/// Бэкграунд воркер, для записи логов, которые не смогли быть записаны сразу
+/// </summary>
 public class FaultLoggerRetryWorker : BackgroundService
 {
+    /// <summary>
+    /// Таймаут в случае исключения
+    /// </summary>
     private TimeSpan ErrorTimeout { get; } = TimeSpan.FromSeconds(120);
     
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -19,12 +25,15 @@ public class FaultLoggerRetryWorker : BackgroundService
             
             try
             {
+                //Получаем логи, которые не были записан
                 var faultLogs = FaultLoggerRetryWorkerHelper.GetFaultLogs();
                 
                 if (faultLogs.Count > 0)
                 {
+                    //Если такие есть, то получаем коннект к логгеру
                     var loggerClient = await LoggerExtension.GetLoggerClient();
 
+                    //Перебираем и записываем их
                     foreach (var log in faultLogs)
                     {
                         var response = await loggerClient.CreateLogAsync(new LogRequest
@@ -43,6 +52,7 @@ public class FaultLoggerRetryWorker : BackgroundService
                         }
                     }
                     
+                    //После записи всех логов - очищаем список
                     FaultLoggerRetryWorkerHelper.ClearFaultLogs();
                 }
 
