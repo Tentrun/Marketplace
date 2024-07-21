@@ -1,3 +1,4 @@
+using Marketplace.BaseLibrary.Utils.Base.Logger.BackgroundWorker;
 using Marketplace.BaseLibrary.Utils.Base.Settings;
 using Marketplace.BaseLibrary.Utils.UnitOfWork.DI;
 using Microsoft.EntityFrameworkCore;
@@ -20,5 +21,6 @@ public static class BaseInfrastructureDi
             opt.EnableThreadSafetyChecks();
         });
         services.AddUnitOfWork();
+        services.AddHostedService<FaultLoggerRetryWorker>();
     }
 }

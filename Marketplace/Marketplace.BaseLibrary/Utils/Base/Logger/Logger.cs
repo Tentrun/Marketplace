@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 using Google.Protobuf.WellKnownTypes;
 using Marketplace.BaseLibrary.Entity.Base.Logger;
 using Marketplace.BaseLibrary.Enum.Base;
-using Marketplace.BaseLibrary.Exception.Logger;
+using Marketplace.BaseLibrary.Utils.Base.Logger.BackgroundWorker;
 using Marketplace.BaseLibrary.Utils.Base.Logger.Extension;
 
 namespace Marketplace.BaseLibrary.Utils.Base.Logger;
@@ -12,6 +12,8 @@ namespace Marketplace.BaseLibrary.Utils.Base.Logger;
 /// </summary>
 public static class Logger
 {
+    private static Log? _currentLogEntity;
+    
     /// <summary>
     /// Логирование данных с явно указанными параметрами
     /// </summary>
@@ -76,11 +78,12 @@ public static class Logger
     /// </summary>
     private static async Task ExecuteCreateLogOperation(Log log)
     {
+        _currentLogEntity = log;
         try
         {
             var loggerClient = await LoggerExtension.GetLoggerClient();
-            
-            LogReply? reply = await loggerClient.CreateLogAsync(new LogRequest
+
+            await loggerClient.CreateLogAsync(new LogRequest
             {
                 LogType = (LogType)log.LogType,
                 LogDate = log.Time.ToTimestamp(),
@@ -91,7 +94,10 @@ public static class Logger
         }
         catch (System.Exception e)
         {
-            throw new LoggerUnavailableException(e.ToString());
+            //Если выпало исключение, то добавляем его в ошибочные логи, далее воркер подхватит и запишет их
+            FaultLoggerRetryWorkerHelper.AddFaultLog(new Log(LogTypeEnum.Error, "Logger", "ExecuteCreateLogOperation", $"Логгер недоступен в {DateTime.UtcNow}, была попытка логгирования значения - {_currentLogEntity.LogValue}, " +
+                $"с типом логгирования - {_currentLogEntity.LogType}, из класса - {_currentLogEntity.CallingClass}, " +
+                $"из метода - {_currentLogEntity.CallingMethod}"));
         }
     }
 }
