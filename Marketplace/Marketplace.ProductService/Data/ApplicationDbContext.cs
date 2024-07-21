@@ -1,3 +1,4 @@
+using Marketplace.BaseLibrary.Entity.Base;
 using Marketplace.BaseLibrary.Entity.Products;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,5 +20,5 @@ public class ApplicationDbContext : DbContext
     /// <summary>
     /// ДбСет продуктов дня
     /// </summary>
-    public DbSet<Product> ProductsOfTheDay { get; set; }
+    public DbSet<ProductOfTheDay> ProductsOfTheDay { get; set; }
 }

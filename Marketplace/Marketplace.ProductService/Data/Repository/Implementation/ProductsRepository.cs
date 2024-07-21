@@ -17,9 +17,9 @@ public class ProductsRepository : BaseRepository<Product, ApplicationDbContext>,
     /// <summary>
     /// Возвращает все продукты дня
     /// </summary>
-    public async Task<List<Product>> GetAllProductsOfTheDay()
+    public async Task<List<ProductOfTheDay>> GetAllProductsOfTheDay()
     {
-        var result = await _dbContext.ProductsOfTheDay.Where(x => x.Id != null).ToListAsync();
+        var result = await _dbContext.ProductsOfTheDay.ToListAsync();
         await _dbContext.DisposeAsync();
         return result;
     }

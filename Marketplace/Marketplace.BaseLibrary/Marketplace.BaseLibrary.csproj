@@ -31,9 +31,6 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Entity\Base\" />
-    </ItemGroup>
-    <ItemGroup>
       <Protobuf Include="Proto\Base\baseRequest.proto">
         <GrpcServices>Both</GrpcServices>
         <Access>Public</Access>

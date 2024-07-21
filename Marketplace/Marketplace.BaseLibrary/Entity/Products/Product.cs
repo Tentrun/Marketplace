@@ -1,12 +1,14 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Marketplace.BaseLibrary.Entity.Base;
 
 namespace Marketplace.BaseLibrary.Entity.Products;
 
 /// <summary>
 /// Модель продукта для БД
 /// </summary>
-public class Product
+public class Product : BaseEntity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
