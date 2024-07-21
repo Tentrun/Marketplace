@@ -1,6 +1,7 @@
 using Marketplace.BaseLibrary.Const;
 using Marketplace.BaseLibrary.Di;
 using Marketplace.BaseLibrary.Di.Swagger;
+using Marketplace.BaseLibrary.Utils;
 using Marketplace.BaseLibrary.Utils.Base.Settings.HealthCheckWorker.DI;
 using Marketplace.Identity.Data;
 using Marketplace.Identity.Data.Repositories.Implementations;
@@ -31,6 +32,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerToDi();
 
 var app = builder.Build();
+
+//Применение авто миграций, если существуют новые добавленные
+app.Services.ApplyMigrations<ApplicationIdentityDbContext>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
